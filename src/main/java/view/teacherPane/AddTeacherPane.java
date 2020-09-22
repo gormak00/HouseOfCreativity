@@ -30,21 +30,19 @@ public class AddTeacherPane {
         createAddButton();
     }
 
-    public AddTeacherPane(String info) {
-        if (info.equals("change")) {
-            addPane = new Pane();
-            createAllLabels();
-            createAllTextFields();
-            createAllComboBoxes();
-            createChangeButton();
+    public AddTeacherPane(boolean change) {
+        addPane = new Pane();
+        createAllLabels();
+        createAllTextFields();
+        createAllComboBoxes();
+        createChangeButton();
 
-            Scene changeScene = new Scene(addPane, 800, 750);
-            Stage changeStage = new Stage();
-            changeStage.setTitle("Окно изменения");
-            changeStage.setScene(changeScene);
-            changeStage.setResizable(false);
-            changeStage.show();
-        }
+        Scene changeScene = new Scene(addPane, 800, 750);
+        Stage changeStage = new Stage();
+        changeStage.setTitle("Окно изменения");
+        changeStage.setScene(changeScene);
+        changeStage.setResizable(false);
+        changeStage.show();
     }
 
     private void createAddButton() {

@@ -31,7 +31,7 @@ public class ChangeTeacherPane {
     private void action() {
         changeButton.setOnAction(event -> {
             Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            AddTeacherPane addTeacherPane = new AddTeacherPane("change");
+            AddTeacherPane addTeacherPane = new AddTeacherPane(true);
         });
     }
 

@@ -7,6 +7,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import lombok.Getter;
 import view.childPane.AddChildPane;
+import view.childPane.ChangeChildPane;
+import view.childPane.RemoveChildPane;
 import view.teacherPane.AddTeacherPane;
 import view.teacherPane.ChangeTeacherPane;
 import view.teacherPane.RemoveTeacherPane;
@@ -87,9 +89,13 @@ public class AppMenuBar {
         });
 
         removeChildMenuItem.setOnAction(event -> {
+            RemoveChildPane removeChildPane = new RemoveChildPane();
+            appScene.getPane().setCenter(removeChildPane.getRemovePane());
         });
 
         changeChildMenuItem.setOnAction(event -> {
+            ChangeChildPane changeChildPane = new ChangeChildPane();
+            appScene.getPane().setCenter(changeChildPane.getChangePane());
         });
 
         addSectionMenuItem.setOnAction(event -> {
