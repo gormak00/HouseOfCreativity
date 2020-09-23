@@ -13,8 +13,8 @@ import lombok.Getter;
 @Getter
 public class AddChildPane {
     private Pane addPane;
-    private Label firstNameLabel, lastNameLabel, patronymicLabel, ageLabel, numberOfSchoolLabel, schoolClassLabel, numberOfBirthCertificateLabel, dateOfBirthCertificateLabel, addressLabel, phoneNumberLabel, fullNameDadLabel, phoneNumberDadLabel, fullNameMumLabel, phoneNumberMumLabel;
-    private TextField firstNameField, lastNameField, patronymicField, ageField, numberOfSchoolField, schoolClassField, numberOfBirthCertificateField, dateOfBirthCertificateField, addressField, phoneNumberField, fullNameDadField, phoneNumberDadField, fullNameMumField, phoneNumberMumField;
+    private Label startDateLabel, firstNameLabel, lastNameLabel, patronymicLabel, ageLabel, numberOfSchoolLabel, schoolClassLabel, numberOfBirthCertificateLabel, dateOfBirthCertificateLabel, addressLabel, phoneNumberLabel, fullNameDadLabel, phoneNumberDadLabel, fullNameMumLabel, phoneNumberMumLabel;
+    private TextField startDateField, firstNameField, lastNameField, patronymicField, ageField, numberOfSchoolField, schoolClassField, numberOfBirthCertificateField, dateOfBirthCertificateField, addressField, phoneNumberField, fullNameDadField, phoneNumberDadField, fullNameMumField, phoneNumberMumField;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
     private Button addButton, changeButton;
 
@@ -29,6 +29,7 @@ public class AddChildPane {
         addPane = new Pane();
         createAllLabels();
         createAllTextFields();
+        createChangeButton();
 
         Scene changeScene = new Scene(addPane, 800, 750);
         Stage changeStage = new Stage();
@@ -72,6 +73,9 @@ public class AddChildPane {
     }
 
     private void createAllTextFields() {
+        startDateField = new TextField("ДД.ММ.ГГГГ");
+        setTextFieldLayoutAndFont(addPane, startDateField, 200.0, 30.0, mainFont);
+
         firstNameField = new TextField();
         setTextFieldLayoutAndFont(addPane, firstNameField, 10.0, 30.0, mainFont);
 
@@ -93,25 +97,25 @@ public class AddChildPane {
         numberOfBirthCertificateField = new TextField();
         setTextFieldLayoutAndFont(addPane, numberOfBirthCertificateField, 10.0, 330.0, mainFont);
 
-        dateOfBirthCertificateField = new TextField();
+        dateOfBirthCertificateField = new TextField("ДД.ММ.ГГГГ");
         setTextFieldLayoutAndFont(addPane, dateOfBirthCertificateField, 10.0, 380.0, mainFont);
 
         addressField = new TextField();
         setTextFieldLayoutAndFont(addPane, addressField, 10.0, 430.0, mainFont);
 
-        phoneNumberField = new TextField();
+        phoneNumberField = new TextField("+375(..)...");
         setTextFieldLayoutAndFont(addPane, phoneNumberField, 10.0, 480.0, mainFont);
 
         fullNameDadField = new TextField();
         setTextFieldLayoutAndFont(addPane, fullNameDadField, 10.0, 530.0, mainFont);
 
-        phoneNumberDadField = new TextField();
+        phoneNumberDadField = new TextField("+375(..)...");
         setTextFieldLayoutAndFont(addPane, phoneNumberDadField, 10.0, 580.0, mainFont);
 
         fullNameMumField = new TextField();
         setTextFieldLayoutAndFont(addPane, fullNameMumField, 10.0, 630.0, mainFont);
 
-        phoneNumberMumField = new TextField();
+        phoneNumberMumField = new TextField("+375(..)...");
         setTextFieldLayoutAndFont(addPane, phoneNumberMumField, 10.0, 680.0, mainFont);
     }
 
@@ -123,6 +127,9 @@ public class AddChildPane {
     }
 
     private void createAllLabels() {
+        startDateLabel = new Label("Введите дату начала занятий");
+        setLabelLayoutAndFont(addPane, startDateLabel, 200.0, 10.0, mainFont);
+
         firstNameLabel = new Label("Введите имя");
         setLabelLayoutAndFont(addPane, firstNameLabel, 10.0, 10.0, mainFont);
 

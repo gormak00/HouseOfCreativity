@@ -10,7 +10,10 @@ import model.Child;
 @Getter
 public class ChildTable {
     private TableView<Child> table;
-    private TableColumn<Child, String> passportNumberColumn, firstNameColumn, lastNameColumn, patronymicColumn, dateOfBirthColumn, sexColumn, familyStatusColumn, educationColumn, addressColumn, phoneNumberColumn, specializationColumn;
+    private TableColumn<Child, String> firstNameColumn, lastNameColumn, patronymicColumn,
+            ageColumn, numberOfSchoolColumn, schoolClassColumn, numberOfBirthCertificateColumn,
+            dateOfBirthCertificateColumn, addressColumn, phoneNumberColumn, fullNameDadColumn,
+            phoneNumberDadColumn, fullNameMumColumn, phoneNumberMumColumn;
 
     public ChildTable() {
         ObservableList<Child> people = FXCollections.observableArrayList(
@@ -27,17 +30,20 @@ public class ChildTable {
         table.setLayoutY(0.0);
         //action();
 
-        createColumn(passportNumberColumn, "Паспорт", "passport_number");
         createColumn(firstNameColumn, "Имя", "first_name");
         createColumn(lastNameColumn, "Фамилия", "last_name");
         createColumn(patronymicColumn, "Отчество", "patronymic");
-        createColumn(dateOfBirthColumn, "Дата рождения", "date_of_birth");
-        createColumn(sexColumn, "Пол", "sex");
-        createColumn(familyStatusColumn, "Семейный статус", "family_status");
-        createColumn(educationColumn, "Образование", "education");
+        createColumn(ageColumn, "Возраст", "age");
+        createColumn(numberOfSchoolColumn, "Номер школы", "number_of_school");
+        createColumn(schoolClassColumn, "Номер класса", "school_class");
+        createColumn(numberOfBirthCertificateColumn, "Номер свидетельства о рождении", "number_of_birth_certificate");
+        createColumn(dateOfBirthCertificateColumn, "Дата выдачи свидетельства о рождении", "date_of_birth_certificate");
         createColumn(addressColumn, "Адрес", "address");
         createColumn(phoneNumberColumn, "Номер телефона", "phone_number");
-        createColumn(specializationColumn, "Специализация", "specialization");
+        createColumn(fullNameDadColumn, "ФИО отца", "full_name_dad");
+        createColumn(phoneNumberDadColumn, "Номер телефона отца", "phone_number_dad");
+        createColumn(fullNameMumColumn, "ФИО матери", "full_name_mum");
+        createColumn(phoneNumberMumColumn, "Номер телефона матери", "phone_number_mum");
     }
 
     private void createColumn(TableColumn<Child, String> columnName, String columnText, String objectText) {

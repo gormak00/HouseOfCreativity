@@ -9,7 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Child {
     private int id;
-    private String passport_number;
     private String first_name;
     private String last_name;
     private String patronymic;

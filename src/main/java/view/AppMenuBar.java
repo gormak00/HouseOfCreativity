@@ -9,6 +9,12 @@ import lombok.Getter;
 import view.childPane.AddChildPane;
 import view.childPane.ChangeChildPane;
 import view.childPane.RemoveChildPane;
+import view.childStatusPane.ReplaceChildFromGroupPane;
+import view.groupPane.AddGroupPane;
+import view.groupPane.RemoveGroupPane;
+import view.sectionPane.AddSectionPane;
+import view.sectionPane.ChangeSectionPane;
+import view.sectionPane.RemoveSectionPane;
 import view.teacherPane.AddTeacherPane;
 import view.teacherPane.ChangeTeacherPane;
 import view.teacherPane.RemoveTeacherPane;
@@ -31,7 +37,7 @@ public class AppMenuBar {
     private final MenuItem changeSectionMenuItem;
     private final MenuItem addGroupMenuItem;
     private final MenuItem removeGroupMenuItem;
-    private final MenuItem changeGroupMenuItem;
+    private final MenuItem replaceChildMenuItem;
 
     public AppMenuBar(AppScene appScene) {
         mainMenuBar = new MenuBar();
@@ -45,6 +51,7 @@ public class AppMenuBar {
         addChildMenuItem = new MenuItem("Add new");
         removeChildMenuItem = new MenuItem("Remove");
         changeChildMenuItem = new MenuItem("Change");
+        replaceChildMenuItem = new MenuItem("Replace");
 
         sectionMenu = new Menu("Section");
         addSectionMenuItem = new MenuItem("Add new");
@@ -54,12 +61,11 @@ public class AppMenuBar {
         groupMenu = new Menu("Group");
         addGroupMenuItem = new MenuItem("Add new");
         removeGroupMenuItem = new MenuItem("Remove");
-        changeGroupMenuItem = new MenuItem("Change");
 
         teacherMenu.getItems().addAll(addTeacherMenuItem, removeTeacherMenuItem, changeTeacherMenuItem);
-        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem);
+        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, replaceChildMenuItem);
         sectionMenu.getItems().addAll(addSectionMenuItem, removeSectionMenuItem, changeSectionMenuItem);
-        groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem, changeGroupMenuItem);
+        groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem);
 
         action(appScene);
 
@@ -98,27 +104,34 @@ public class AppMenuBar {
             appScene.getPane().setCenter(changeChildPane.getChangePane());
         });
 
+        replaceChildMenuItem.setOnAction(event -> {
+            ReplaceChildFromGroupPane replaceChildFromGroupPane = new ReplaceChildFromGroupPane();
+            appScene.getPane().setCenter(replaceChildFromGroupPane.getReplacePane());
+        });
+
         addSectionMenuItem.setOnAction(event -> {
+            AddSectionPane addSectionPane = new AddSectionPane();
+            appScene.getPane().setCenter(addSectionPane.getAddPane());
         });
 
         removeSectionMenuItem.setOnAction(event -> {
+            RemoveSectionPane removeSectionPane = new RemoveSectionPane();
+            appScene.getPane().setCenter(removeSectionPane.getRemovePane());
         });
 
         changeSectionMenuItem.setOnAction(event -> {
+            ChangeSectionPane changeSectionPane = new ChangeSectionPane();
+            appScene.getPane().setCenter(changeSectionPane.getChangePane());
         });
 
         addGroupMenuItem.setOnAction(event -> {
+            AddGroupPane addGroupPane = new AddGroupPane();
+            appScene.getPane().setCenter(addGroupPane.getAddPane());
         });
 
         removeGroupMenuItem.setOnAction(event -> {
-        });
-
-        changeGroupMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-
-            }
+            RemoveGroupPane removeGroupPane = new RemoveGroupPane();
+            appScene.getPane().setCenter(removeGroupPane.getRemovePane());
         });
     }
 }
