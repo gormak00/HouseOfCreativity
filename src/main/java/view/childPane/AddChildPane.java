@@ -47,7 +47,7 @@ public class AddChildPane {
 
     private void createChangeButton(){
         changeButton = new Button("Изменить ребенка");
-        setButtonLayoutAndFont(addPane, addButton, 250,660);
+        setButtonLayoutAndFont(addPane, changeButton, 250,660);
         actionChangeButton();
     }
 

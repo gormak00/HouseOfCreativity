@@ -52,7 +52,7 @@ public class AddSectionPane {
         });
     }
     private void createChangeButton(){
-        changeButton = new Button("Добавить секцию");
+        changeButton = new Button("Изменить секцию");
         setButtonLayoutAndFont(addPane, changeButton, 250.0, 110.0);
         actionChangeButton();
     }

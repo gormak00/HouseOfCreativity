@@ -2,11 +2,9 @@ package view.table;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import lombok.Getter;
 import model.Teacher;
 
@@ -18,9 +16,9 @@ public class TeacherTable {
     public TeacherTable() {
         ObservableList<Teacher> people = FXCollections.observableArrayList(
 
+                /*new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
                 new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")
+                new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")*/
 
         );
         table = new TableView<Teacher>(people);
@@ -48,76 +46,4 @@ public class TeacherTable {
         columnName.setCellValueFactory(new PropertyValueFactory<>(objectText));
         table.getColumns().add(columnName);
     }
-
-    /*private void action(){
-        firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstNameColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setFirst_name(t.getNewValue())
-        );
-
-        lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        lastNameColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setLast_name(t.getNewValue())
-        );
-
-        patronymicColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        patronymicColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setPatronymic(t.getNewValue())
-        );
-
-        dateOfBirthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        dateOfBirthColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setDate_of_birth(t.getNewValue())
-        );
-
-        sexColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        sexColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setSex(t.getNewValue())
-        );
-
-        familyStatusColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        familyStatusColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setFamily_status(t.getNewValue())
-        );
-
-        educationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        educationColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setEducation(t.getNewValue())
-        );
-
-        addressColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        addressColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setAddress(t.getNewValue())
-        );
-
-        phoneNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        phoneNumberColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setPhone_number(t.getNewValue())
-        );
-
-        specializationColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        specializationColumn.setOnEditCommit(
-                t -> ((Teacher) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                ).setSpecialization(t.getNewValue())
-        );
-    }*/
 }

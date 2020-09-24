@@ -8,8 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Teacher {
-    //private int id;
+    private int id;
     private String passport_number;
     private String first_name;
     private String last_name;

@@ -20,4 +20,7 @@ dependencies {
     compile group: 'org.openjfx', name: 'javafx-controls', version: '15'
     compile group: 'org.openjfx', name: 'javafx-graphics', version: '15'
     compile group: 'org.openjfx', name: 'javafx-fxml', version: '15'
+
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    compile group: 'org.mapstruct', name: 'mapstruct', version: '1.4.0.CR1'
 }
