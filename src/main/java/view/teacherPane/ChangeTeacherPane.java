@@ -8,6 +8,9 @@ import lombok.Getter;
 import model.Teacher;
 import view.table.TeacherTable;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class ChangeTeacherPane {
     private Pane changePane;
@@ -15,7 +18,7 @@ public class ChangeTeacherPane {
     private TeacherTable teacherTable;
     private AddTeacherPane addTeacherPane;
 
-    public ChangeTeacherPane() {
+    public ChangeTeacherPane() throws IOException, SQLException {
         teacherTable = new TeacherTable();
         changePane = new Pane();
         createTableOfTeachers();
@@ -30,8 +33,8 @@ public class ChangeTeacherPane {
 
     private void action() {
         changeButton.setOnAction(event -> {
-            Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            AddTeacherPane addTeacherPane = new AddTeacherPane(true);
+            Teacher selectedTeacher = teacherTable.getTable().getSelectionModel().getSelectedItem();
+            AddTeacherPane addTeacherPane = new AddTeacherPane(selectedTeacher);
         });
     }
 

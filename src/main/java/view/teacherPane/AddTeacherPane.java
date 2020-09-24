@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lombok.Getter;
+import model.Teacher;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,12 +36,13 @@ public class AddTeacherPane {
         createAddButton();
     }
 
-    public AddTeacherPane(boolean change) {
+    public AddTeacherPane(Teacher teacherForChange) {
         addPane = new Pane();
         createAllLabels();
         createAllTextFields();
         createAllComboBoxes();
-        createChangeButton();
+        createChangeButton(teacherForChange);
+        insertTeacherIntoBoxesAndFields(teacherForChange);
 
         Scene changeScene = new Scene(addPane, 800, 750);
         Stage changeStage = new Stage();
@@ -56,12 +58,6 @@ public class AddTeacherPane {
         actionAddButton();
     }
 
-    private void createChangeButton() {
-        changeButton = new Button("Изменить преподавателя");
-        setButtonLayoutAndFont(addPane, changeButton, 250.0, 550.0);
-        actionChangeButton();
-    }
-
     private void actionAddButton() {
         addButton.setOnAction(event -> {
             TeacherController teacherController = new TeacherController();
@@ -73,26 +69,20 @@ public class AddTeacherPane {
         });
     }
 
-    private TeacherDto createTeacherDto(){
-        TeacherDto teacherDto = new TeacherDto();
-        teacherDto.setPassportNumber(passportNumberField.getText());
-        teacherDto.setFirstName(firstNameField.getText());
-        teacherDto.setLastName(lastNameField.getText());
-        teacherDto.setPatronymic(patronymicField.getText());
-        teacherDto.setDateOfBirth(dateOfBirthField.getText());
-        teacherDto.setSex(sexComboBox.getEditor().getText());
-        teacherDto.setFamilyStatus(familyStatusComboBox.getEditor().getText());
-        teacherDto.setEducation(educationComboBox.getEditor().getText());
-        teacherDto.setAddress(addressField.getText());
-        teacherDto.setPhoneNumber(phoneNumberField.getText());
-        teacherDto.setSpecialization(specializationField.getText());
-        return teacherDto;
+    private void createChangeButton(Teacher oldTeacher) {
+        changeButton = new Button("Изменить преподавателя");
+        setButtonLayoutAndFont(addPane, changeButton, 250.0, 550.0);
+        actionChangeButton(oldTeacher);
     }
 
-    private void actionChangeButton() {
+    private void actionChangeButton(Teacher oldTeacher) {
         changeButton.setOnAction(event -> {
-            /*Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);*/
+            TeacherController teacherController = new TeacherController();
+            try {
+                teacherController.changeTeacher(createTeacherDto(), oldTeacher);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -101,6 +91,36 @@ public class AddTeacherPane {
         buttonName.setLayoutX(layoutX);
         buttonName.setLayoutY(layoutY);
         paneName.getChildren().add(buttonName);
+    }
+
+    private void insertTeacherIntoBoxesAndFields(Teacher teacher){
+        sexComboBox.setValue(teacher.getSex());
+        familyStatusComboBox.setValue(teacher.getFamily_status());
+        educationComboBox.setValue(teacher.getEducation());
+        passportNumberField.setText(teacher.getPassport_number());
+        firstNameField.setText(teacher.getFirst_name());
+        lastNameField.setText(teacher.getFirst_name());
+        patronymicField.setText(teacher.getPatronymic());
+        dateOfBirthField.setText(teacher.getDate_of_birth());
+        addressField.setText(teacher.getAddress());
+        phoneNumberField.setText(teacher.getPhone_number());
+        specializationField.setText(teacher.getSpecialization());
+    }
+
+    private TeacherDto createTeacherDto(){
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setPassportNumber(passportNumberField.getText());
+        teacherDto.setFirstName(firstNameField.getText());
+        teacherDto.setLastName(lastNameField.getText());
+        teacherDto.setPatronymic(patronymicField.getText());
+        teacherDto.setDateOfBirth(dateOfBirthField.getText());
+        teacherDto.setSex(sexComboBox.getValue().toString());
+        teacherDto.setFamilyStatus(familyStatusComboBox.getValue().toString());
+        teacherDto.setEducation(educationComboBox.getValue().toString());
+        teacherDto.setAddress(addressField.getText());
+        teacherDto.setPhoneNumber(phoneNumberField.getText());
+        teacherDto.setSpecialization(specializationField.getText());
+        return teacherDto;
     }
 
     private void createAllComboBoxes() {
@@ -120,6 +140,7 @@ public class AddTeacherPane {
 
         ObservableList<String> educationList = FXCollections.observableArrayList(
                 "Общее базовое",
+                "никакое",
                 "Общее среднее",
                 "Профессионально-техническое/среднее специальное",
                 "Высшее профессиональное");

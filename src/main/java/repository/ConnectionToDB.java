@@ -14,7 +14,7 @@ public abstract class ConnectionToDB {
         String username= (String) p.get ("username");
         String password= (String) p.get ("password");
         Connection con = DriverManager.getConnection(url, username, password);
-        Statement stmt = con.createStatement();
+/*        Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("select * from teacher");
         while (rs.next()) {
             System.out.println(rs.getInt(1) + " " + rs.getString(2) + " "
@@ -22,7 +22,7 @@ public abstract class ConnectionToDB {
         }
         rs.close();
         stmt.close();
-        con.close();
+        con.close();*/
         return con;
     }
 }

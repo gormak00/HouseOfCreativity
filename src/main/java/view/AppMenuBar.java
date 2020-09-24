@@ -19,6 +19,9 @@ import view.teacherPane.AddTeacherPane;
 import view.teacherPane.ChangeTeacherPane;
 import view.teacherPane.RemoveTeacherPane;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class AppMenuBar {
     private final MenuBar mainMenuBar;
@@ -80,12 +83,22 @@ public class AppMenuBar {
         });
 
         removeTeacherMenuItem.setOnAction(event -> {
-            RemoveTeacherPane removeTeacherPane = new RemoveTeacherPane();
+            RemoveTeacherPane removeTeacherPane = null;
+            try {
+                removeTeacherPane = new RemoveTeacherPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
             appScene.getPane().setCenter(removeTeacherPane.getRemovePane());
         });
 
         changeTeacherMenuItem.setOnAction(event -> {
-            ChangeTeacherPane changeTeacherPane = new ChangeTeacherPane();
+            ChangeTeacherPane changeTeacherPane = null;
+            try {
+                changeTeacherPane = new ChangeTeacherPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
             appScene.getPane().setCenter(changeTeacherPane.getChangePane());
         });
 

@@ -1,5 +1,6 @@
 package view.table;
 
+import controller.TeacherController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -8,25 +9,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import model.Teacher;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class TeacherTable {
     private TableView<Teacher> table;
     private TableColumn<Teacher, String> passportNumberColumn, firstNameColumn, lastNameColumn, patronymicColumn, dateOfBirthColumn, sexColumn, familyStatusColumn, educationColumn, addressColumn, phoneNumberColumn, specializationColumn;
+    private TeacherController teacherController;
+    public TeacherTable() throws IOException, SQLException {
+        teacherController = new TeacherController();
+        ObservableList<Teacher> allTeachers = FXCollections.observableArrayList(teacherController.getAllTeachersList());
 
-    public TeacherTable() {
-        ObservableList<Teacher> people = FXCollections.observableArrayList(
-
-                /*new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Teacher("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")*/
-
-        );
-        table = new TableView<Teacher>(people);
+        table = new TableView<Teacher>(allTeachers);
         table.setPrefWidth(800);
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
         table.setLayoutY(0.0);
-        //action();
 
         createColumn(passportNumberColumn, "Паспорт", "passport_number");
         createColumn(firstNameColumn, "Имя", "first_name");

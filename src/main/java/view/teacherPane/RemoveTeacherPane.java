@@ -1,5 +1,6 @@
 package view.teacherPane;
 
+import controller.TeacherController;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -8,13 +9,16 @@ import lombok.Getter;
 import model.Teacher;
 import view.table.TeacherTable;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class RemoveTeacherPane {
     private Pane removePane;
     private Button deleteButton;
     private TeacherTable teacherTable;
 
-    public RemoveTeacherPane() {
+    public RemoveTeacherPane() throws IOException, SQLException {
         teacherTable = new TeacherTable();
         removePane = new Pane();
         createTableOfTeachers();
@@ -29,8 +33,14 @@ public class RemoveTeacherPane {
 
     private void action() {
         deleteButton.setOnAction(event -> {
-            Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);
+            Teacher selectedTeacher = teacherTable.getTable().getSelectionModel().getSelectedItem();
+            TeacherController teacherController = new TeacherController();
+            try {
+                teacherController.removeTeacher(selectedTeacher);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            teacherTable.getTable().getItems().remove(selectedTeacher);
         });
     }
 
