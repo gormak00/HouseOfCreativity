@@ -4,7 +4,7 @@ import model.Child;
 import org.mapstruct.Mapper;
 
 @Mapper
-public class ChildMapper {
+public interface ChildMapper {
     static Child toChild(ChildDto childDto) {
         Child child = new Child();
         child.setFirst_name(childDto.getFirstName());

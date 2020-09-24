@@ -4,7 +4,7 @@ import model.Teacher;
 import org.mapstruct.Mapper;
 
 @Mapper
-public class TeacherMapper {
+public interface TeacherMapper {
     static Teacher toTeacher(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();
         teacher.setPassport_number(teacherDto.getPassportNumber());

@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class Main extends Application {
     public static void main(String[] args) throws IOException, SQLException {
         System.out.println("ТАКОООЙ ДАУН");
-        ConnectionToDB connectionToDB = new ConnectionToDB();
-        connectionToDB.getDB();
+        /*ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.getDB();*/
         launch(args);
     }
 

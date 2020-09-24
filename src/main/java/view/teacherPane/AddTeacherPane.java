@@ -1,5 +1,7 @@
 package view.teacherPane;
 
+import controller.TeacherController;
+import controller.dto.TeacherDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -12,6 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lombok.Getter;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 @Getter
 public class AddTeacherPane {
@@ -59,9 +64,29 @@ public class AddTeacherPane {
 
     private void actionAddButton() {
         addButton.setOnAction(event -> {
-            /*Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);*/
+            TeacherController teacherController = new TeacherController();
+            try {
+                teacherController.addTeacher(createTeacherDto());
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
+    }
+
+    private TeacherDto createTeacherDto(){
+        TeacherDto teacherDto = new TeacherDto();
+        teacherDto.setPassportNumber(passportNumberField.getText());
+        teacherDto.setFirstName(firstNameField.getText());
+        teacherDto.setLastName(lastNameField.getText());
+        teacherDto.setPatronymic(patronymicField.getText());
+        teacherDto.setDateOfBirth(dateOfBirthField.getText());
+        teacherDto.setSex(sexComboBox.getEditor().getText());
+        teacherDto.setFamilyStatus(familyStatusComboBox.getEditor().getText());
+        teacherDto.setEducation(educationComboBox.getEditor().getText());
+        teacherDto.setAddress(addressField.getText());
+        teacherDto.setPhoneNumber(phoneNumberField.getText());
+        teacherDto.setSpecialization(specializationField.getText());
+        return teacherDto;
     }
 
     private void actionChangeButton() {

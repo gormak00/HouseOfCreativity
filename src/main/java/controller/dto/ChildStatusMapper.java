@@ -4,7 +4,7 @@ import model.ChildStatus;
 import org.mapstruct.Mapper;
 
 @Mapper
-public class ChildStatusMapper {
+public interface ChildStatusMapper {
     static ChildStatus toChildStatus(ChildStatusDto childStatusDto, int childId, String todayDate) {
         ChildStatus childStatus = new ChildStatus();
         childStatus.setChild_id(childId);

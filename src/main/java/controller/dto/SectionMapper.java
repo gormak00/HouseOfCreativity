@@ -4,7 +4,7 @@ import model.Section;
 import org.mapstruct.Mapper;
 
 @Mapper
-public class SectionMapper {
+public interface SectionMapper {
     static Section toSection(SectionDto sectionDto, int teacherId) {
         Section section = new Section();
         section.setNumber(sectionDto.getNumber());

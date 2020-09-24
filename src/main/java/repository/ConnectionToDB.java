@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-public class ConnectionToDB {
-    public Connection getDB() throws IOException, SQLException {
+public abstract class ConnectionToDB {
+    public Connection getConnectionFromDB() throws IOException, SQLException {
         FileInputStream fis=new FileInputStream("/home/gormak/BSUIR/ПБЗ/2 лаб/HouseOfCreativity/src/main/resources/application.properties");
         Properties p=new Properties ();
         p.load (fis);
