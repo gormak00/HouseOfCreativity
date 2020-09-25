@@ -1,5 +1,6 @@
 package view.childPane;
 
+import controller.ChildController;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -8,6 +9,9 @@ import lombok.Getter;
 import model.Child;
 import view.table.ChildTable;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 
 @Getter
 public class RemoveChildPane {
@@ -15,7 +19,7 @@ public class RemoveChildPane {
     private ChildTable childTable;
     private Button removeButton;
 
-    public RemoveChildPane() {
+    public RemoveChildPane() throws IOException, SQLException {
         removePane = new Pane();
         childTable = new ChildTable();
         createTable();
@@ -37,8 +41,14 @@ public class RemoveChildPane {
 
     private void action() {
         removeButton.setOnAction(event -> {
-            Child selectedItem = childTable.getTable().getSelectionModel().getSelectedItem();
-            childTable.getTable().getItems().remove(selectedItem);
+            Child selectedChild = childTable.getTable().getSelectionModel().getSelectedItem();
+            ChildController childController = new ChildController();
+            try {
+                childController.removeChild(selectedChild);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            childTable.getTable().getItems().remove(selectedChild);
         });
     }
 

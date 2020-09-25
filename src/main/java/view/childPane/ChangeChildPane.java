@@ -7,13 +7,17 @@ import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import model.Child;
 import view.table.ChildTable;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class ChangeChildPane {
     private Pane changePane;
     private ChildTable childTable;
     private Button changeButton;
 
-    public ChangeChildPane(){
+    public ChangeChildPane() throws IOException, SQLException {
         changePane = new Pane();
         createTable();
         createChangeButton();
@@ -35,11 +39,11 @@ public class ChangeChildPane {
     private void action() {
         changeButton.setOnAction(event -> {
             Child selectedItem = childTable.getTable().getSelectionModel().getSelectedItem();
-            AddChildPane addChildPane = new AddChildPane(true);
+            AddChildPane addChildPane = new AddChildPane(selectedItem);
         });
     }
 
-    private void createTable(){
+    private void createTable() throws IOException, SQLException {
         childTable = new ChildTable();
         changePane.getChildren().add(childTable.getTable());
     }

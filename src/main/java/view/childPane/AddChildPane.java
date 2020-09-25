@@ -1,5 +1,7 @@
 package view.childPane;
 
+import controller.ChildController;
+import controller.dto.ChildDto;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +11,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lombok.Getter;
+import model.Child;
+import model.Teacher;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 @Getter
 public class AddChildPane {
@@ -25,11 +32,12 @@ public class AddChildPane {
         createAddButton();
     }
 
-    public AddChildPane(boolean change) {
+    public AddChildPane(Child childForChange) {
         addPane = new Pane();
         createAllLabels();
         createAllTextFields();
-        createChangeButton();
+        createChangeButton(childForChange);
+        insertChildIntoFields(childForChange);
 
         Scene changeScene = new Scene(addPane, 800, 750);
         Stage changeStage = new Stage();
@@ -39,29 +47,54 @@ public class AddChildPane {
         changeStage.show();
     }
 
+    private void insertChildIntoFields(Child child){
+        firstNameField.setText(child.getFirst_name());
+        lastNameField.setText(child.getLast_name());
+        patronymicField.setText(child.getPatronymic());
+        ageField.setText(String.valueOf(child.getAge()));
+        numberOfSchoolField.setText(child.getNumber_of_school());
+        schoolClassField.setText(child.getSchool_class());
+        numberOfBirthCertificateField.setText(child.getNumber_of_birth_certificate());
+        dateOfBirthCertificateField.setText(child.getDate_of_birth_certificate());
+        addressField.setText(child.getAddress());
+        phoneNumberField.setText(child.getPhone_number());
+        fullNameDadField.setText(child.getFull_name_dad());
+        phoneNumberDadField.setText(child.getPhone_number_dad());
+        fullNameMumField.setText(child.getFull_name_mum());
+        phoneNumberMumField.setText(child.getPhone_number_mum());
+    }
+
     private void createAddButton(){
         addButton = new Button("Добавить ребенка");
         setButtonLayoutAndFont(addPane, addButton, 250,660);
         actionAddButton();
     }
 
-    private void createChangeButton(){
+    private void createChangeButton(Child oldChild){
         changeButton = new Button("Изменить ребенка");
         setButtonLayoutAndFont(addPane, changeButton, 250,660);
-        actionChangeButton();
+        actionChangeButton(oldChild);
     }
 
     private void actionAddButton() {
         addButton.setOnAction(event -> {
-            /*Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);*/
+            ChildController childController = new ChildController();
+            try {
+                childController.addChild(createChildDto());
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
         });
     }
 
-    private void actionChangeButton() {
+    private void actionChangeButton(Child oldChild) {
         changeButton.setOnAction(event -> {
-            /*Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);*/
+            ChildController childController = new ChildController();
+            try {
+                childController.changeChild(createChildDto(), oldChild);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -70,6 +103,25 @@ public class AddChildPane {
         buttonName.setLayoutX(layoutX);
         buttonName.setLayoutY(layoutY);
         paneName.getChildren().add(buttonName);
+    }
+
+    private ChildDto createChildDto(){
+        ChildDto childDto = new ChildDto();
+        childDto.setFirstName(firstNameField.getText());
+        childDto.setLastName(lastNameField.getText());
+        childDto.setPatronymic(patronymicField.getText());
+        childDto.setAge(Integer.parseInt(ageField.getText()));
+        childDto.setNumberOfSchool(numberOfSchoolField.getText());
+        childDto.setSchoolClass(schoolClassField.getText());
+        childDto.setNumberOfBirthCertificate(numberOfBirthCertificateField.getText());
+        childDto.setDateOfBirthCertificate(dateOfBirthCertificateField.getText());
+        childDto.setAddress(addressField.getText());
+        childDto.setPhoneNumber(phoneNumberField.getText());
+        childDto.setFullNameDad(fullNameDadField.getText());
+        childDto.setPhoneNumberDad(phoneNumberDadField.getText());
+        childDto.setFullNameMum(fullNameMumField.getText());
+        childDto.setPhoneNumberMum(phoneNumberMumField.getText());
+        return childDto;
     }
 
     private void createAllTextFields() {

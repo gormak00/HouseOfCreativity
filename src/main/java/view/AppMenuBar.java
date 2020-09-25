@@ -89,6 +89,7 @@ public class AppMenuBar {
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
+            assert removeTeacherPane != null;
             appScene.getPane().setCenter(removeTeacherPane.getRemovePane());
         });
 
@@ -99,6 +100,7 @@ public class AppMenuBar {
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
+            assert changeTeacherPane != null;
             appScene.getPane().setCenter(changeTeacherPane.getChangePane());
         });
 
@@ -108,12 +110,24 @@ public class AppMenuBar {
         });
 
         removeChildMenuItem.setOnAction(event -> {
-            RemoveChildPane removeChildPane = new RemoveChildPane();
+            RemoveChildPane removeChildPane = null;
+            try {
+                removeChildPane = new RemoveChildPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert removeChildPane != null;
             appScene.getPane().setCenter(removeChildPane.getRemovePane());
         });
 
         changeChildMenuItem.setOnAction(event -> {
-            ChangeChildPane changeChildPane = new ChangeChildPane();
+            ChangeChildPane changeChildPane = null;
+            try {
+                changeChildPane = new ChangeChildPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert changeChildPane != null;
             appScene.getPane().setCenter(changeChildPane.getChangePane());
         });
 

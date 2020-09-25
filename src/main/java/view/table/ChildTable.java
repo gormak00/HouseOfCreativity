@@ -1,5 +1,6 @@
 package view.table;
 
+import controller.ChildController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -7,6 +8,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import model.Child;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class ChildTable {
     private TableView<Child> table;
@@ -14,21 +19,16 @@ public class ChildTable {
             ageColumn, numberOfSchoolColumn, schoolClassColumn, numberOfBirthCertificateColumn,
             dateOfBirthCertificateColumn, addressColumn, phoneNumberColumn, fullNameDadColumn,
             phoneNumberDadColumn, fullNameMumColumn, phoneNumberMumColumn;
+    private ChildController childController;
 
-    public ChildTable() {
-        ObservableList<Child> people = FXCollections.observableArrayList(
-
-                /*new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")
-*/
-        );
+    public ChildTable() throws IOException, SQLException {
+        childController = new ChildController();
+        ObservableList<Child> people = FXCollections.observableArrayList(childController.getAllChildren());
         table = new TableView<Child>(people);
         table.setPrefWidth(800);
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
         table.setLayoutY(0.0);
-        //action();
 
         createColumn(firstNameColumn, "Имя", "first_name");
         createColumn(lastNameColumn, "Фамилия", "last_name");
