@@ -1,5 +1,6 @@
 package view.table;
 
+import controller.GroupsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -8,25 +9,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import model.Groups;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class GroupTable {
     private TableView<Groups> table;
     private TableColumn<Groups, String> numberColumn, nameColumn, sectionNumberColumn;
+    private GroupsController groupsController;
 
-    public GroupTable() {
-        ObservableList<Groups> people = FXCollections.observableArrayList(
-
-                /*new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")
-*/
-        );
+    public GroupTable() throws SQLException, IOException {
+        groupsController = new GroupsController();
+        ObservableList<Groups> people = FXCollections.observableArrayList(groupsController.getAllGroups());
         table = new TableView<Groups>(people);
         table.setPrefWidth(800);
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
         table.setLayoutY(0.0);
-        //action();
 
         createColumn(numberColumn, "Номер группы", "number");
         createColumn(nameColumn, "Название группы", "name");

@@ -16,6 +16,7 @@ public class SectionController {
     private TeacherController teacherController;
     private SectionRepository sectionRepository;
     private List<SectionDto> allSectionsDto;
+    private List<Integer> allSectionsNumbers;
 
     public void addSection(SectionDto sectionDto) throws IOException, SQLException {
         teacherController = new TeacherController();
@@ -57,5 +58,19 @@ public class SectionController {
         Section section = SectionMapper.toSection(sectionDto, id);
 
         sectionRepository.changeSection(section, oldSectionDto);
+    }
+
+    public List<Integer> getAllSectionNumbers() throws IOException, SQLException {
+        allSectionsNumbers = new ArrayList<>();
+        sectionRepository = new SectionRepository();
+        fromResultSetToSectionNumbersList(sectionRepository.getAllSectionNumbers(), allSectionsNumbers);
+        return allSectionsNumbers;
+    }
+
+    private void fromResultSetToSectionNumbersList(ResultSet resultSet, List<Integer> resultList) throws SQLException {
+        while (resultSet.next()) {
+            resultList.add(resultSet.getInt(1));
+        }
+        resultSet.close();
     }
 }

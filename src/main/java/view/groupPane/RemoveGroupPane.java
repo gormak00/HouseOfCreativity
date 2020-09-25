@@ -1,5 +1,6 @@
 package view.groupPane;
 
+import controller.GroupsController;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -8,13 +9,16 @@ import lombok.Getter;
 import model.Groups;
 import view.table.GroupTable;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class RemoveGroupPane {
     private Pane removePane;
     private GroupTable groupTable;
     private Button removeButton;
 
-    public RemoveGroupPane() {
+    public RemoveGroupPane() throws SQLException, IOException {
         removePane = new Pane();
         groupTable = new GroupTable();
         createTable();
@@ -36,8 +40,14 @@ public class RemoveGroupPane {
 
     private void action() {
         removeButton.setOnAction(event -> {
-            Groups selectedItem = groupTable.getTable().getSelectionModel().getSelectedItem();
-            groupTable.getTable().getItems().remove(selectedItem);
+            Groups selectedGroups = groupTable.getTable().getSelectionModel().getSelectedItem();
+            GroupsController groupsController = new GroupsController();
+            try {
+                groupsController.removeGroup(selectedGroups);
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            groupTable.getTable().getItems().remove(selectedGroups);
         });
     }
 

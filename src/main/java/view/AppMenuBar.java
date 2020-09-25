@@ -170,12 +170,24 @@ public class AppMenuBar {
         });
 
         addGroupMenuItem.setOnAction(event -> {
-            AddGroupPane addGroupPane = new AddGroupPane();
+            AddGroupPane addGroupPane = null;
+            try {
+                addGroupPane = new AddGroupPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert addGroupPane != null;
             appScene.getPane().setCenter(addGroupPane.getAddPane());
         });
 
         removeGroupMenuItem.setOnAction(event -> {
-            RemoveGroupPane removeGroupPane = new RemoveGroupPane();
+            RemoveGroupPane removeGroupPane = null;
+            try {
+                removeGroupPane = new RemoveGroupPane();
+            } catch (SQLException | IOException throwables) {
+                throwables.printStackTrace();
+            }
+            assert removeGroupPane != null;
             appScene.getPane().setCenter(removeGroupPane.getRemovePane());
         });
     }

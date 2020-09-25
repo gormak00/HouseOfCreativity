@@ -1,5 +1,8 @@
 package view.groupPane;
 
+import controller.GroupsController;
+import controller.SectionController;
+import controller.dto.GroupsDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -11,6 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class AddGroupPane {
     private Pane addPane;
@@ -19,8 +25,9 @@ public class AddGroupPane {
     private TextField numberTextField, nameTextField;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
     private Button addButton;
+    private SectionController sectionController;
 
-    public AddGroupPane(){
+    public AddGroupPane() throws IOException, SQLException {
         addPane = new Pane();
         createAllLabels();
         createAllComboBoxes();
@@ -28,11 +35,10 @@ public class AddGroupPane {
         createAddButton();
     }
 
-    private void createAllComboBoxes() {
-        ObservableList<String> sectionNumberList = FXCollections.observableArrayList(
-                "Мужской",
-                "Женский");
-        sectionNumberBox = new ComboBox<String>(sectionNumberList);
+    private void createAllComboBoxes() throws IOException, SQLException {
+        sectionController = new SectionController();
+        ObservableList<Integer> sectionNumberList = FXCollections.observableArrayList(sectionController.getAllSectionNumbers());
+        sectionNumberBox = new ComboBox<Integer>(sectionNumberList);
         sectionNumberBox.setValue("Не выбрано");
         setComboBoxLayout(addPane, sectionNumberBox, 10.0, 130.0);
     }
@@ -51,8 +57,21 @@ public class AddGroupPane {
 
     private void actionAddButton(){
         addButton.setOnAction(event -> {
-
+            GroupsController groupsController = new GroupsController();
+            try {
+                groupsController.addGroup(createGroupsDto());
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
+    }
+
+    private GroupsDto createGroupsDto(){
+        GroupsDto groupsDto = new GroupsDto();
+        groupsDto.setName(nameTextField.getText());
+        groupsDto.setNumber(Integer.parseInt(numberTextField.getText()));
+        groupsDto.setSectionNumber(Integer.parseInt(sectionNumberBox.getValue().toString()));
+        return groupsDto;
     }
 
     private void setButtonLayoutAndFont(Pane paneName, Button buttonName, Double layoutX, Double layoutY) {

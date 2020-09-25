@@ -28,7 +28,7 @@ public class SectionRepository extends ConnectionToDB {
 
     public ResultSet getAllSection() throws SQLException {
         Statement statement = con.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM section");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM section;");
         statement.close();
         con.close();
         return resultSet;
@@ -66,5 +66,13 @@ public class SectionRepository extends ConnectionToDB {
         preparedStatement.execute();
         preparedStatement.close();
         con.close();
+    }
+
+    public ResultSet getAllSectionNumbers() throws SQLException {
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT number FROM section;");
+        statement.close();
+        con.close();
+        return resultSet;
     }
 }
