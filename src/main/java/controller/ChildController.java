@@ -16,6 +16,7 @@ import java.util.List;
 public class ChildController {
     private ChildRepository childRepository;
     private List<Child> allChildren;
+    private List<String> allChildrenFullNames;
 
     public void addChild(ChildDto childDto) throws SQLException, IOException {
         childRepository = new ChildRepository();
@@ -62,6 +63,20 @@ public class ChildController {
             currentChild.setPhone_number_mum(resultSet.getString(15));
 
             resultList.add(currentChild);
+        }
+        resultSet.close();
+    }
+
+    public List<String> getAllChildrenFullNames() throws SQLException, IOException {
+        allChildrenFullNames = new ArrayList<>();
+        childRepository = new ChildRepository();
+        fromResultSetToFullNamesChildList(childRepository.getAllChildrenFullNames(), allChildrenFullNames);
+        return allChildrenFullNames;
+    }
+
+    private void fromResultSetToFullNamesChildList(ResultSet resultSet, List<String> resultList) throws SQLException {
+        while (resultSet.next()) {
+            resultList.add(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
         }
         resultSet.close();
     }

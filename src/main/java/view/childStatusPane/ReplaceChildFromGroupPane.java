@@ -14,8 +14,8 @@ import lombok.Getter;
 @Getter
 public class ReplaceChildFromGroupPane {
     private Pane replacePane;
-    private ComboBox childNameBox, newGroupBox;
-    private Label childNameLabel, todayDateLabel, newGroupLabel;
+    private ComboBox childNameBox, newGroupBox, oldGroupBox;
+    private Label childNameLabel, todayDateLabel, newGroupLabel, oldGroupLabel;
     private TextField todayDateField;
     private Button replaceButton;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
@@ -36,12 +36,19 @@ public class ReplaceChildFromGroupPane {
         childNameBox.setValue("Не выбрано");
         setComboBoxLayout(replacePane, childNameBox, 10.0, 30.0);
 
-        ObservableList<String> allGroupsList = FXCollections.observableArrayList(
+        ObservableList<String> freeGroupsList = FXCollections.observableArrayList(
                 "Мужской",
                 "Женский");
-        newGroupBox = new ComboBox<String>(allGroupsList);
+        newGroupBox = new ComboBox<String>(freeGroupsList);
         newGroupBox.setValue("Не выбрано");
         setComboBoxLayout(replacePane, newGroupBox, 10.0, 130.0);
+
+        ObservableList<String> childInGroupsList = FXCollections.observableArrayList(
+                "Мужской",
+                "Женский");
+        oldGroupBox = new ComboBox<String>(childInGroupsList);
+        oldGroupBox.setValue("Не выбрано");
+        setComboBoxLayout(replacePane, oldGroupBox, 10.0, 180.0);
     }
 
     private void setComboBoxLayout(Pane paneName, ComboBox comboBoxName, Double layoutX, Double layoutY) {
@@ -71,6 +78,9 @@ public class ReplaceChildFromGroupPane {
 
         newGroupLabel = new Label("Выберите новую группу");
         setLabelLayoutAndFont(replacePane, newGroupLabel, 10.0, 110.0, mainFont);
+
+        oldGroupLabel = new Label("Выберите группу из которой хотите перевестись");
+        setLabelLayoutAndFont(replacePane, oldGroupLabel, 10.0, 160.0, mainFont);
     }
 
     private void setLabelLayoutAndFont(Pane paneName, Label labelName, Double layoutX, Double layoutY, Font font) {

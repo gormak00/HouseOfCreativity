@@ -9,6 +9,7 @@ import lombok.Getter;
 import view.childPane.AddChildPane;
 import view.childPane.ChangeChildPane;
 import view.childPane.RemoveChildPane;
+import view.childStatusPane.AddChildToGroupPane;
 import view.childStatusPane.ReplaceChildFromGroupPane;
 import view.groupPane.AddGroupPane;
 import view.groupPane.RemoveGroupPane;
@@ -41,6 +42,7 @@ public class AppMenuBar {
     private final MenuItem addGroupMenuItem;
     private final MenuItem removeGroupMenuItem;
     private final MenuItem replaceChildMenuItem;
+    private final MenuItem addChildToGroupMenuItem;
 
     public AppMenuBar(AppScene appScene) {
         mainMenuBar = new MenuBar();
@@ -54,6 +56,7 @@ public class AppMenuBar {
         addChildMenuItem = new MenuItem("Add new");
         removeChildMenuItem = new MenuItem("Remove");
         changeChildMenuItem = new MenuItem("Change");
+        addChildToGroupMenuItem = new MenuItem("Add to group");
         replaceChildMenuItem = new MenuItem("Replace");
 
         sectionMenu = new Menu("Section");
@@ -66,7 +69,7 @@ public class AppMenuBar {
         removeGroupMenuItem = new MenuItem("Remove");
 
         teacherMenu.getItems().addAll(addTeacherMenuItem, removeTeacherMenuItem, changeTeacherMenuItem);
-        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, replaceChildMenuItem);
+        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, addChildToGroupMenuItem, replaceChildMenuItem);
         sectionMenu.getItems().addAll(addSectionMenuItem, removeSectionMenuItem, changeSectionMenuItem);
         groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem);
 
@@ -189,6 +192,17 @@ public class AppMenuBar {
             }
             assert removeGroupPane != null;
             appScene.getPane().setCenter(removeGroupPane.getRemovePane());
+        });
+
+        addChildToGroupMenuItem.setOnAction(event -> {
+            AddChildToGroupPane addChildToGroupPane = null;
+            try {
+                addChildToGroupPane = new AddChildToGroupPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert addChildToGroupPane != null;
+            appScene.getPane().setCenter(addChildToGroupPane.getAddToGroupPane());
         });
     }
 }

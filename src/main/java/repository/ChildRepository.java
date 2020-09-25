@@ -38,7 +38,7 @@ public class ChildRepository extends ConnectionToDB {
 
     public ResultSet getAllChildren() throws SQLException {
         Statement statement = con.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM child");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM child;");
         statement.close();
         con.close();
         return resultSet;
@@ -104,5 +104,26 @@ public class ChildRepository extends ConnectionToDB {
         preparedStatement.execute();
         preparedStatement.close();
         con.close();
+    }
+
+    public ResultSet getAllChildrenFullNames() throws SQLException {
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT last_name, first_name, patronymic FROM child;");
+        statement.close();
+        con.close();
+        return resultSet;
+    }
+
+    public ResultSet getChildIdByFullName(String lastName, String firstName, String patronymic) throws SQLException {
+        String SQL = "SELECT id FROM child WHERE last_name = ? AND first_name = ? AND patronymic = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setString(1, lastName);
+        preparedStatement.setString(2, firstName);
+        preparedStatement.setString(3, patronymic);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
+        return resultSet;
     }
 }
