@@ -137,17 +137,35 @@ public class AppMenuBar {
         });
 
         addSectionMenuItem.setOnAction(event -> {
-            AddSectionPane addSectionPane = new AddSectionPane();
+            AddSectionPane addSectionPane = null;
+            try {
+                addSectionPane = new AddSectionPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert addSectionPane != null;
             appScene.getPane().setCenter(addSectionPane.getAddPane());
         });
 
         removeSectionMenuItem.setOnAction(event -> {
-            RemoveSectionPane removeSectionPane = new RemoveSectionPane();
+            RemoveSectionPane removeSectionPane = null;
+            try {
+                removeSectionPane = new RemoveSectionPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert removeSectionPane != null;
             appScene.getPane().setCenter(removeSectionPane.getRemovePane());
         });
 
         changeSectionMenuItem.setOnAction(event -> {
-            ChangeSectionPane changeSectionPane = new ChangeSectionPane();
+            ChangeSectionPane changeSectionPane = null;
+            try {
+                changeSectionPane = new ChangeSectionPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert changeSectionPane != null;
             appScene.getPane().setCenter(changeSectionPane.getChangePane());
         });
 

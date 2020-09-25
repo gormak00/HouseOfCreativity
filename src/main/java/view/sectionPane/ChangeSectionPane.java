@@ -1,5 +1,6 @@
 package view.sectionPane;
 
+import controller.dto.SectionDto;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -8,13 +9,16 @@ import lombok.Getter;
 import model.Section;
 import view.table.SectionTable;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class ChangeSectionPane {
     private Pane changePane;
     private SectionTable sectionTable;
     private Button changeButton;
 
-    public ChangeSectionPane() {
+    public ChangeSectionPane() throws IOException, SQLException {
         changePane = new Pane();
         createTable();
         createChangeButton();
@@ -35,12 +39,16 @@ public class ChangeSectionPane {
 
     private void action() {
         changeButton.setOnAction(event -> {
-            Section selectedItem = sectionTable.getTable().getSelectionModel().getSelectedItem();
-            AddSectionPane addSectionPane = new AddSectionPane(true);
+            SectionDto selectedSectionDto = sectionTable.getTable().getSelectionModel().getSelectedItem();
+            try {
+                AddSectionPane addSectionPane = new AddSectionPane(selectedSectionDto);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private void createTable() {
+    private void createTable() throws IOException, SQLException {
         sectionTable = new SectionTable();
         changePane.getChildren().add(sectionTable.getTable());
     }

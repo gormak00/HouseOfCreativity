@@ -98,4 +98,28 @@ public class TeacherRepository extends ConnectionToDB {
         preparedStatement.close();
         con.close();
     }
+
+    public int getTeacherIdByFullName(String firstName, String lastName, String patronymic) throws SQLException {
+        int id = 0;
+        String SQL = "SELECT id FROM teacher WHERE first_name = ? AND last_name = ? AND patronymic = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setString(1, firstName);
+        preparedStatement.setString(2, lastName);
+        preparedStatement.setString(3, patronymic);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        while (resultSet.next()) {
+            id = resultSet.getInt(1);
+        }
+        resultSet.close();
+        return id != 0 ?id :null;
+    }
+
+    public ResultSet getAllFullNamesTeachers() throws SQLException {
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery("select first_name, last_name, patronymic from teacher");
+        statement.close();
+        con.close();
+        return resultSet;
+    }
 }

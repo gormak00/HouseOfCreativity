@@ -2,13 +2,9 @@ package controller;
 
 import controller.dto.ChildDto;
 import controller.dto.ChildMapper;
-import controller.dto.TeacherDto;
-import controller.dto.TeacherMapper;
 import lombok.NoArgsConstructor;
 import model.Child;
-import model.Teacher;
 import repository.ChildRepository;
-import repository.TeacherRepository;
 
 import java.io.IOException;
 import java.sql.ResultSet;

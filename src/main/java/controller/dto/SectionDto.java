@@ -16,6 +16,6 @@ public class SectionDto {
     private int number;
     @NotNull(message = "Empty name field")
     private String name;
-    @NotNull(message = "Empty teacherLastName field")
-    private String teacherLastName;
+    @NotNull(message = "Empty fullNameTeacher field")
+    private String fullNameTeacher;
 }

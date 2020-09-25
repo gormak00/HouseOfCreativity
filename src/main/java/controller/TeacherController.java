@@ -14,6 +14,10 @@ import java.util.List;
 public class TeacherController {
     private TeacherRepository teacherRepository;
     private List<Teacher> allTeachers;
+    private List<String> fullNamesTeachers;
+    private String[] subStr;
+    private String firstName, lastName, patronymic;
+    private static String delimeter = " ";
 
     public void addTeacher(TeacherDto teacherDto) throws IOException, SQLException {
         teacherRepository = new TeacherRepository();
@@ -59,5 +63,35 @@ public class TeacherController {
             resultList.add(currentTeacher);
         }
         resultSet.close();
+    }
+
+    public int getTeacherIdByFullName(String fullName) throws SQLException, IOException {
+        splitStringTo3Words(fullName);
+        teacherRepository = new TeacherRepository();
+        return teacherRepository.getTeacherIdByFullName(firstName, lastName, patronymic);
+    }
+
+    private void splitStringTo3Words(String fullWord){
+        subStr = fullWord.split(delimeter, 3); // Разбить строку str с порогом равным 3, который означает, как много подстрок, должно быть возвращено.
+        lastName = subStr[0];
+        firstName = subStr[1];
+        patronymic = subStr[2];
+        System.out.println(firstName + " " + lastName + " " + patronymic);
+    }
+
+    public List<String> getFullNamesList() throws IOException, SQLException {
+        teacherRepository = new TeacherRepository();
+        fullNamesTeachers = new ArrayList<>();
+        return fromResultSetToFullNamesList(teacherRepository.getAllFullNamesTeachers(), fullNamesTeachers);
+    }
+
+    private List<String> fromResultSetToFullNamesList(ResultSet resultSet, List<String> resultList) throws SQLException {
+        while (resultSet.next()) {
+            String fullName = resultSet.getString(2) + delimeter + resultSet.getString(1) + delimeter + resultSet.getString(3);
+
+            resultList.add(fullName);
+        }
+        resultSet.close();
+        return resultList;
     }
 }

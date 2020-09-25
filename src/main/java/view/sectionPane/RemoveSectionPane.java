@@ -1,5 +1,7 @@
 package view.sectionPane;
 
+import controller.SectionController;
+import controller.dto.SectionDto;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -7,15 +9,18 @@ import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import model.Section;
 import view.table.SectionTable;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class RemoveSectionPane {
     private Pane removePane;
     private SectionTable sectionTable;
     private Button removeButton;
 
-    public RemoveSectionPane() {
+    public RemoveSectionPane() throws IOException, SQLException {
         removePane = new Pane();
-        sectionTable = new SectionTable();
         createTable();
         createRemoveButton();
     }
@@ -35,12 +40,19 @@ public class RemoveSectionPane {
 
     private void action() {
         removeButton.setOnAction(event -> {
-            Section selectedItem = sectionTable.getTable().getSelectionModel().getSelectedItem();
+            SectionDto selectedItem = sectionTable.getTable().getSelectionModel().getSelectedItem();
+            SectionController sectionController = new SectionController();
+            try {
+                sectionController.removeSection(selectedItem);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
             sectionTable.getTable().getItems().remove(selectedItem);
         });
     }
 
-    private void createTable() {
+    private void createTable() throws IOException, SQLException {
+        sectionTable = new SectionTable();
         removePane.getChildren().add(sectionTable.getTable());
     }
 }

@@ -1,5 +1,7 @@
 package view.table;
 
+import controller.SectionController;
+import controller.dto.SectionDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -8,20 +10,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import model.Section;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class SectionTable {
-    private TableView<Section> table;
-    private TableColumn<Section, String> numberColumn, nameColumn;
+    private TableView<SectionDto> table;
+    private TableColumn<SectionDto, String> numberColumn, nameColumn, fullNameColumn;
+    private SectionController sectionController;
 
-    public SectionTable() {
-        ObservableList<Section> people = FXCollections.observableArrayList(
-
-                /*new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30"),
-                new Child("П5", "Крюков", "30", "Киев", "П5", "Крюков", "30", "Киев", "П5", "Крюков", "30")
-*/
-        );
-        table = new TableView<Section>(people);
+    public SectionTable() throws IOException, SQLException {
+        sectionController = new SectionController();
+        ObservableList<SectionDto> sectionDto = FXCollections.observableArrayList(sectionController.getAllSection());
+        table = new TableView<SectionDto>(sectionDto);
         table.setPrefWidth(800);
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
@@ -30,10 +31,10 @@ public class SectionTable {
 
         createColumn(numberColumn, "Номер секции", "number");
         createColumn(nameColumn, "Название секции", "name");
-        //createColumn(lastNameColumn, "ФИО преподавателя", "teacher_id");
+        createColumn(fullNameColumn, "ФИО преподавателя", "fullNameTeacher");
     }
 
-    private void createColumn(TableColumn<Section, String> columnName, String columnText, String objectText) {
+    private void createColumn(TableColumn<SectionDto, String> columnName, String columnText, String objectText) {
         columnName = new TableColumn<>(columnText);
         columnName.setCellValueFactory(new PropertyValueFactory<>(objectText));
         table.getColumns().add(columnName);
