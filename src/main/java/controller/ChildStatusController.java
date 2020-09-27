@@ -2,6 +2,7 @@ package controller;
 
 import controller.dto.ChildStatusDto;
 import controller.dto.ChildStatusMapper;
+import lombok.Getter;
 import model.Child;
 import model.ChildStatus;
 import model.Groups;
@@ -15,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 public class ChildStatusController {
     private ChildStatusRepository childStatusRepository;
     private ChildRepository childRepository;
@@ -24,6 +25,7 @@ public class ChildStatusController {
     private String firstName, lastName, patronymic;
     private static String delimeter = " ";
     private List<Integer> childGroupsList, allGroupsList, notChildGroupsList;
+    private ChildStatus childStatus;
 
     public List<Integer> getFreeGroupsByChild(String fullNameOfChild) throws IOException, SQLException {
         if (fullNameOfChild.equals("Не выбрано")) return null;
@@ -57,11 +59,12 @@ public class ChildStatusController {
         fromResultSetToGroupsList(groupsRepository.getAllGroups(), allGroupsList);
     }
 
-    private void createChildGroupsList(String fullNameOfChild) throws SQLException, IOException {
+    public List<Integer> createChildGroupsList(String fullNameOfChild) throws SQLException, IOException {
         childStatusRepository = new ChildStatusRepository();
         splitStringTo3Words(fullNameOfChild);
         childGroupsList = new ArrayList<>();
         fromResultSetToGroupsList(this.childStatusRepository.getGrupsNumbersFromFullNameChild(lastName, firstName, patronymic), childGroupsList);
+        return childGroupsList;
     }
 
     private void splitStringTo3Words(String fullWord) {
@@ -95,5 +98,22 @@ public class ChildStatusController {
         int id = fromResultSetToInt(childRepository.getChildIdByFullName(lastName, firstName, patronymic));
         ChildStatus childStatus = ChildStatusMapper.toChildStatus(childStatusDto, id);
         childStatusRepository.addChildStatus(childStatus);
+    }
+
+    public void replaceChild(ChildStatusDto childStatusDto) throws IOException, SQLException {
+        removeChildFromGroup(childStatusDto);
+        childStatusRepository = new ChildStatusRepository();
+        childStatusRepository.addChildStatus(childStatus);
+    }
+
+    public void removeChildFromGroup(ChildStatusDto childStatusDto) throws IOException, SQLException {
+        childStatusRepository = new ChildStatusRepository();
+        splitStringTo3Words(childStatusDto.getChildName());
+        childRepository = new ChildRepository();
+        int id = fromResultSetToInt(childRepository.getChildIdByFullName(lastName, firstName, patronymic));
+        childStatus = ChildStatusMapper.toChildStatus(childStatusDto, id);
+        System.out.println("ТУТ " + id + " " + childStatusDto.getOldGroupNumber() + " " + childStatusDto.getTodayDate());
+        childStatusRepository.setEndDateByChildIdAndGroup(id, childStatusDto.getOldGroupNumber(), childStatusDto.getTodayDate());
+
     }
 }

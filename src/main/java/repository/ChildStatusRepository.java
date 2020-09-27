@@ -12,7 +12,7 @@ public class ChildStatusRepository extends ConnectionToDB{
     }
 
     public ResultSet getGrupsNumbersFromFullNameChild(String lastName, String firstName, String patronymic) throws SQLException {
-        String SQL = "SELECT group_number FROM child_status WHERE child_id = (SELECT id FROM child WHERE last_name = ? AND first_name = ? AND patronymic = ?);";
+        String SQL = "SELECT group_number FROM child_status WHERE end_date IS null AND child_id = (SELECT id FROM child WHERE last_name = ? AND first_name = ? AND patronymic = ?);";
         PreparedStatement preparedStatement = con.prepareStatement(SQL);
         preparedStatement.setString(1, lastName);
         preparedStatement.setString(2, firstName);
@@ -31,6 +31,20 @@ public class ChildStatusRepository extends ConnectionToDB{
         preparedStatement.setInt(1, childStatus.getChild_id());
         preparedStatement.setInt(2, childStatus.getGroup_number());
         preparedStatement.setString(3, childStatus.getStart_date());
+
+        preparedStatement.execute();
+        preparedStatement.close();
+        con.close();
+    }
+
+    public void setEndDateByChildIdAndGroup(int id, int oldGroupNumber, String todayDate) throws SQLException {
+        String SQL = "UPDATE child_status " +
+                "SET end_date = ? " +
+                "WHERE child_id = ? AND group_number = ? AND end_date IS null;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setString(1, todayDate);
+        preparedStatement.setInt(2, id);
+        preparedStatement.setInt(3, oldGroupNumber);
 
         preparedStatement.execute();
         preparedStatement.close();

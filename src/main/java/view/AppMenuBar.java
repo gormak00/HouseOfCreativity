@@ -10,6 +10,7 @@ import view.childPane.AddChildPane;
 import view.childPane.ChangeChildPane;
 import view.childPane.RemoveChildPane;
 import view.childStatusPane.AddChildToGroupPane;
+import view.childStatusPane.RemoveChildFromGroupPane;
 import view.childStatusPane.ReplaceChildFromGroupPane;
 import view.groupPane.AddGroupPane;
 import view.groupPane.RemoveGroupPane;
@@ -43,6 +44,7 @@ public class AppMenuBar {
     private final MenuItem removeGroupMenuItem;
     private final MenuItem replaceChildMenuItem;
     private final MenuItem addChildToGroupMenuItem;
+    private final MenuItem removeChildFromGroupMenuItem;
 
     public AppMenuBar(AppScene appScene) {
         mainMenuBar = new MenuBar();
@@ -57,6 +59,7 @@ public class AppMenuBar {
         removeChildMenuItem = new MenuItem("Remove");
         changeChildMenuItem = new MenuItem("Change");
         addChildToGroupMenuItem = new MenuItem("Add to group");
+        removeChildFromGroupMenuItem = new MenuItem("Remove from the group");
         replaceChildMenuItem = new MenuItem("Replace");
 
         sectionMenu = new Menu("Section");
@@ -69,7 +72,7 @@ public class AppMenuBar {
         removeGroupMenuItem = new MenuItem("Remove");
 
         teacherMenu.getItems().addAll(addTeacherMenuItem, removeTeacherMenuItem, changeTeacherMenuItem);
-        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, addChildToGroupMenuItem, replaceChildMenuItem);
+        childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, addChildToGroupMenuItem, removeChildFromGroupMenuItem, replaceChildMenuItem);
         sectionMenu.getItems().addAll(addSectionMenuItem, removeSectionMenuItem, changeSectionMenuItem);
         groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem);
 
@@ -135,7 +138,13 @@ public class AppMenuBar {
         });
 
         replaceChildMenuItem.setOnAction(event -> {
-            ReplaceChildFromGroupPane replaceChildFromGroupPane = new ReplaceChildFromGroupPane();
+            ReplaceChildFromGroupPane replaceChildFromGroupPane = null;
+            try {
+                replaceChildFromGroupPane = new ReplaceChildFromGroupPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert replaceChildFromGroupPane != null;
             appScene.getPane().setCenter(replaceChildFromGroupPane.getReplacePane());
         });
 
@@ -203,6 +212,17 @@ public class AppMenuBar {
             }
             assert addChildToGroupPane != null;
             appScene.getPane().setCenter(addChildToGroupPane.getAddToGroupPane());
+        });
+
+        removeChildFromGroupMenuItem.setOnAction(event -> {
+            RemoveChildFromGroupPane removeChildFromGroupPane = null;
+            try {
+                removeChildFromGroupPane = new RemoveChildFromGroupPane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert removeChildFromGroupPane != null;
+            appScene.getPane().setCenter(removeChildFromGroupPane.getRemoveFromGroupPane());
         });
     }
 }

@@ -1,5 +1,8 @@
 package view.childStatusPane;
 
+import controller.ChildController;
+import controller.ChildStatusController;
+import controller.dto.ChildStatusDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -11,42 +14,44 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 @Getter
 public class ReplaceChildFromGroupPane {
     private Pane replacePane;
     private ComboBox childNameBox, newGroupBox, oldGroupBox;
     private Label childNameLabel, todayDateLabel, newGroupLabel, oldGroupLabel;
     private TextField todayDateField;
-    private Button replaceButton;
+    private Button replaceButton, childButton;
+    private ChildStatusController childStatusController;
+    private ChildController childController;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
 
-    public ReplaceChildFromGroupPane(){
+    public ReplaceChildFromGroupPane() throws IOException, SQLException {
         replacePane = new Pane();
-        createAllComboBoxes();
-        createAllLabels();
-        createAllTextFields();
-        createReplaceButton();
+        createChildNameBox();
+        createChildButton();
+        createChildLabel();
     }
 
-    private void createAllComboBoxes() {
-        ObservableList<String> nameList = FXCollections.observableArrayList(
-                "Мужской",
-                "Женский");
+    private void createChildNameBox() throws IOException, SQLException {
+        childController = new ChildController();
+        childStatusController = new ChildStatusController();
+        ObservableList<String> nameList = FXCollections.observableArrayList(childController.getAllChildrenFullNames());
         childNameBox = new ComboBox<String>(nameList);
         childNameBox.setValue("Не выбрано");
         setComboBoxLayout(replacePane, childNameBox, 10.0, 30.0);
+    }
 
-        ObservableList<String> freeGroupsList = FXCollections.observableArrayList(
-                "Мужской",
-                "Женский");
-        newGroupBox = new ComboBox<String>(freeGroupsList);
+    private void createGroupsComboBoxes() throws IOException, SQLException {
+        ObservableList<Integer> freeGroupsList = FXCollections.observableArrayList(childStatusController.getFreeGroupsByChild(childNameBox.getValue().toString()));
+        newGroupBox = new ComboBox<Integer>(freeGroupsList);
         newGroupBox.setValue("Не выбрано");
         setComboBoxLayout(replacePane, newGroupBox, 10.0, 130.0);
 
-        ObservableList<String> childInGroupsList = FXCollections.observableArrayList(
-                "Мужской",
-                "Женский");
-        oldGroupBox = new ComboBox<String>(childInGroupsList);
+        ObservableList<Integer> childInGroupsList = FXCollections.observableArrayList(childStatusController.createChildGroupsList(childNameBox.getValue().toString()));
+        oldGroupBox = new ComboBox<Integer>(childInGroupsList);
         oldGroupBox.setValue("Не выбрано");
         setComboBoxLayout(replacePane, oldGroupBox, 10.0, 180.0);
     }
@@ -55,6 +60,25 @@ public class ReplaceChildFromGroupPane {
         comboBoxName.setLayoutX(layoutX);
         comboBoxName.setLayoutY(layoutY);
         paneName.getChildren().add(comboBoxName);
+    }
+
+    private void createChildButton() {
+        childButton = new Button("Выбрать ребенка");
+        setButtonLayoutAndFont(replacePane, childButton, 270.0, 30.0);
+        actionChildButton();
+    }
+
+    private void actionChildButton() {
+        childButton.setOnAction(event -> {
+            try {
+                createGroupsComboBoxes();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            createAllLabels();
+            createAllTextFields();
+            createReplaceButton();
+        });
     }
 
     private void createAllTextFields() {
@@ -69,10 +93,12 @@ public class ReplaceChildFromGroupPane {
         paneName.getChildren().add(textFieldName);
     }
 
-    private void createAllLabels() {
+    private void createChildLabel(){
         childNameLabel = new Label("Выберите имя ребенка");
         setLabelLayoutAndFont(replacePane, childNameLabel, 10.0, 10.0, mainFont);
+    }
 
+    private void createAllLabels() {
         todayDateLabel = new Label("Укажите сегодняшнюю дату");
         setLabelLayoutAndFont(replacePane, todayDateLabel, 10.0, 60.0, mainFont);
 
@@ -98,9 +124,22 @@ public class ReplaceChildFromGroupPane {
 
     private void actionReplaceButton() {
         replaceButton.setOnAction(event -> {
-            /*Teacher selectedItem = teacherTable.getTable().getSelectionModel().getSelectedItem();
-            teacherTable.getTable().getItems().remove(selectedItem);*/
+            ChildStatusController childStatusController = new ChildStatusController();
+            try {
+                childStatusController.replaceChild(createChildStatusDto());
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
         });
+    }
+
+    private ChildStatusDto createChildStatusDto(){
+        ChildStatusDto childStatusDto = new ChildStatusDto();
+        childStatusDto.setChildName(childNameBox.getValue().toString());
+        childStatusDto.setTodayDate(todayDateField.getText());
+        childStatusDto.setNewGroupNumber(Integer.parseInt(newGroupBox.getValue().toString()));
+        childStatusDto.setOldGroupNumber(Integer.parseInt(oldGroupBox.getValue().toString()));
+        return childStatusDto;
     }
 
     private void setButtonLayoutAndFont(Pane paneName, Button buttonName, double layoutX, double layoutY) {
