@@ -16,6 +16,9 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Getter
 public class AddChildToGroupPane {
@@ -27,6 +30,7 @@ public class AddChildToGroupPane {
     private TextField todayDateField;
     private Button addToGroupButton, childButton;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
 
     public AddChildToGroupPane() throws IOException, SQLException {
         addToGroupPane = new Pane();
@@ -51,7 +55,7 @@ public class AddChildToGroupPane {
         setComboBoxLayout(addToGroupPane, newGroupBox, 10.0, 130.0);
     }
 
-        private void setComboBoxLayout(Pane paneName, ComboBox comboBoxName, Double layoutX, Double layoutY) {
+    private void setComboBoxLayout(Pane paneName, ComboBox comboBoxName, Double layoutX, Double layoutY) {
         comboBoxName.setLayoutX(layoutX);
         comboBoxName.setLayoutY(layoutY);
         paneName.getChildren().add(comboBoxName);
@@ -100,18 +104,19 @@ public class AddChildToGroupPane {
             childStatusController = new ChildStatusController();
             try {
                 childStatusController.addChildStatus(createChildStatusDto());
-            } catch (IOException | SQLException e) {
+            } catch (IOException | SQLException | ParseException e) {
                 e.printStackTrace();
             }
 
         });
     }
 
-    private ChildStatusDto createChildStatusDto(){
+    private ChildStatusDto createChildStatusDto() throws ParseException {
         ChildStatusDto childStatusDto = new ChildStatusDto();
         childStatusDto.setChildName(childNameBox.getValue().toString());
         childStatusDto.setNewGroupNumber(Integer.parseInt(newGroupBox.getValue().toString()));
-        childStatusDto.setTodayDate(todayDateField.getText());
+        Date date = formatter.parse(todayDateField.getText());
+        childStatusDto.setTodayDate(formatter.format(date));
         return childStatusDto;
     }
 

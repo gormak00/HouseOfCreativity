@@ -3,10 +3,7 @@ package controller;
 import controller.dto.ChildStatusDto;
 import controller.dto.ChildStatusMapper;
 import lombok.Getter;
-import model.Child;
 import model.ChildStatus;
-import model.Groups;
-import model.Teacher;
 import repository.ChildRepository;
 import repository.ChildStatusRepository;
 import repository.GroupsRepository;
@@ -25,6 +22,7 @@ public class ChildStatusController {
     private String firstName, lastName, patronymic;
     private static String delimeter = " ";
     private List<Integer> childGroupsList, allGroupsList, notChildGroupsList;
+    private List<ChildStatus> childStatusList;
     private ChildStatus childStatus;
 
     public List<Integer> getFreeGroupsByChild(String fullNameOfChild) throws IOException, SQLException {
@@ -114,6 +112,27 @@ public class ChildStatusController {
         childStatus = ChildStatusMapper.toChildStatus(childStatusDto, id);
         System.out.println("ТУТ " + id + " " + childStatusDto.getOldGroupNumber() + " " + childStatusDto.getTodayDate());
         childStatusRepository.setEndDateByChildIdAndGroup(id, childStatusDto.getOldGroupNumber(), childStatusDto.getTodayDate());
+
+    }
+
+    public List<ChildStatus> getAllChildrenByGroup(int groupNumber) throws IOException, SQLException {
+        childStatusRepository = new ChildStatusRepository();
+        childStatusList = new ArrayList<>();
+        //childStatusRepository.getAllChildrenByGroupNumber(groupNumber);
+        fromResultSetToChildStatusList(childStatusRepository.getAllChildrenByGroupNumber(groupNumber), childStatusList);
+        return childStatusList;
+    }
+
+    private void fromResultSetToChildStatusList(ResultSet resultSet, List<ChildStatus> resultList) throws SQLException {
+        while (resultSet.next()) {
+            ChildStatus childStatus = new ChildStatus();
+            childStatus.setChild_id(resultSet.getInt(2));
+            childStatus.setGroup_number(resultSet.getInt(3));
+            childStatus.setStart_date(resultSet.getString(4));
+            childStatus.setEnd_date(resultSet.getString(5));
+            resultList.add(childStatus);
+        }
+        resultSet.close();
 
     }
 }

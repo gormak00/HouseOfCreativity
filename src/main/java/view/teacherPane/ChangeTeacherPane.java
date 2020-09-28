@@ -46,7 +46,7 @@ public class ChangeTeacherPane {
     }
 
     private void createTableOfTeachers() {
-        teacherTable.getTable().setEditable(true);
+        //teacherTable.getTable().setEditable(true);
         changePane.getChildren().add(teacherTable.getTable());
     }
 }

@@ -12,6 +12,7 @@ import view.childPane.RemoveChildPane;
 import view.childStatusPane.AddChildToGroupPane;
 import view.childStatusPane.RemoveChildFromGroupPane;
 import view.childStatusPane.ReplaceChildFromGroupPane;
+import view.extraPane.ChildFromGroupByDatePane;
 import view.groupPane.AddGroupPane;
 import view.groupPane.RemoveGroupPane;
 import view.sectionPane.AddSectionPane;
@@ -31,6 +32,7 @@ public class AppMenuBar {
     private final Menu childMenu;
     private final Menu sectionMenu;
     private final Menu groupMenu;
+    private final Menu extraMenu;
     private final MenuItem addTeacherMenuItem;
     private final MenuItem removeTeacherMenuItem;
     private final MenuItem changeTeacherMenuItem;
@@ -45,6 +47,7 @@ public class AppMenuBar {
     private final MenuItem replaceChildMenuItem;
     private final MenuItem addChildToGroupMenuItem;
     private final MenuItem removeChildFromGroupMenuItem;
+    private final MenuItem childFromGroupByDateMenuItem;
 
     public AppMenuBar(AppScene appScene) {
         mainMenuBar = new MenuBar();
@@ -71,14 +74,18 @@ public class AppMenuBar {
         addGroupMenuItem = new MenuItem("Add new");
         removeGroupMenuItem = new MenuItem("Remove");
 
+        extraMenu = new Menu("Extra");
+        childFromGroupByDateMenuItem = new MenuItem("Child+group by date");
+
         teacherMenu.getItems().addAll(addTeacherMenuItem, removeTeacherMenuItem, changeTeacherMenuItem);
         childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, addChildToGroupMenuItem, removeChildFromGroupMenuItem, replaceChildMenuItem);
         sectionMenu.getItems().addAll(addSectionMenuItem, removeSectionMenuItem, changeSectionMenuItem);
         groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem);
+        extraMenu.getItems().addAll(childFromGroupByDateMenuItem);
 
         action(appScene);
 
-        mainMenuBar.getMenus().addAll(teacherMenu, childMenu, sectionMenu, groupMenu);
+        mainMenuBar.getMenus().addAll(teacherMenu, childMenu, sectionMenu, groupMenu, extraMenu);
 
     }
 
@@ -223,6 +230,17 @@ public class AppMenuBar {
             }
             assert removeChildFromGroupPane != null;
             appScene.getPane().setCenter(removeChildFromGroupPane.getRemoveFromGroupPane());
+        });
+
+        childFromGroupByDateMenuItem.setOnAction(event -> {
+            ChildFromGroupByDatePane childFromGroupByDatePane = null;
+            try {
+                childFromGroupByDatePane = new ChildFromGroupByDatePane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert childFromGroupByDatePane != null;
+            appScene.getPane().setCenter(childFromGroupByDatePane.getPane());
         });
     }
 }

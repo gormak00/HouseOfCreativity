@@ -22,7 +22,7 @@ public class TeacherRepository extends ConnectionToDB {
         preparedStatement.setString(2, teacher.getFirst_name());
         preparedStatement.setString(3, teacher.getLast_name());
         preparedStatement.setString(4, teacher.getPatronymic());
-        preparedStatement.setString(5, teacher.getDate_of_birth());
+        preparedStatement.setString(5, String.valueOf(teacher.getDate_of_birth()));
         preparedStatement.setString(6, teacher.getSex());
         preparedStatement.setString(7, teacher.getFamily_status());
         preparedStatement.setString(8, teacher.getEducation());

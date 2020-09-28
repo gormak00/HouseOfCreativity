@@ -4,6 +4,7 @@ import model.Child;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 public class ChildRepository extends ConnectionToDB {
     private Connection con;
@@ -124,6 +125,17 @@ public class ChildRepository extends ConnectionToDB {
         ResultSet resultSet = preparedStatement.executeQuery();
         preparedStatement.close();
         con.close();
+        return resultSet;
+    }
+
+    public ResultSet getAllChildrenById(int childId) throws SQLException {
+        String SQL = "SELECT * FROM child WHERE id = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setInt(1, childId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        //con.close();
         return resultSet;
     }
 }

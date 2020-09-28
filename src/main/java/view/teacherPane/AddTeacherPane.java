@@ -18,6 +18,9 @@ import model.Teacher;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Getter
 public class AddTeacherPane {
@@ -27,6 +30,8 @@ public class AddTeacherPane {
     private ComboBox sexComboBox, familyStatusComboBox, educationComboBox;
     private Button addButton, changeButton;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
+    private static SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
+
 
     public AddTeacherPane() {
         addPane = new Pane();
@@ -63,7 +68,7 @@ public class AddTeacherPane {
             TeacherController teacherController = new TeacherController();
             try {
                 teacherController.addTeacher(createTeacherDto());
-            } catch (IOException | SQLException e) {
+            } catch (IOException | SQLException | ParseException e) {
                 e.printStackTrace();
             }
         });
@@ -80,7 +85,7 @@ public class AddTeacherPane {
             TeacherController teacherController = new TeacherController();
             try {
                 teacherController.changeTeacher(createTeacherDto(), oldTeacher);
-            } catch (IOException | SQLException e) {
+            } catch (IOException | SQLException | ParseException e) {
                 e.printStackTrace();
             }
         });
@@ -101,19 +106,20 @@ public class AddTeacherPane {
         firstNameField.setText(teacher.getFirst_name());
         lastNameField.setText(teacher.getFirst_name());
         patronymicField.setText(teacher.getPatronymic());
-        dateOfBirthField.setText(teacher.getDate_of_birth());
+        dateOfBirthField.setText(String.valueOf(teacher.getDate_of_birth()));
         addressField.setText(teacher.getAddress());
         phoneNumberField.setText(teacher.getPhone_number());
         specializationField.setText(teacher.getSpecialization());
     }
 
-    private TeacherDto createTeacherDto(){
+    private TeacherDto createTeacherDto() throws ParseException {
         TeacherDto teacherDto = new TeacherDto();
         teacherDto.setPassportNumber(passportNumberField.getText());
         teacherDto.setFirstName(firstNameField.getText());
         teacherDto.setLastName(lastNameField.getText());
         teacherDto.setPatronymic(patronymicField.getText());
-        teacherDto.setDateOfBirth(dateOfBirthField.getText());
+        Date date = formatter.parse(dateOfBirthField.getText());
+        teacherDto.setDateOfBirth(formatter.format(date));
         teacherDto.setSex(sexComboBox.getValue().toString());
         teacherDto.setFamilyStatus(familyStatusComboBox.getValue().toString());
         teacherDto.setEducation(educationComboBox.getValue().toString());

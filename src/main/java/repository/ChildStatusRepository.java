@@ -50,4 +50,15 @@ public class ChildStatusRepository extends ConnectionToDB{
         preparedStatement.close();
         con.close();
     }
+
+    public ResultSet getAllChildrenByGroupNumber(int groupNumber) throws SQLException {
+        String SQL = "SELECT * FROM child_status WHERE group_number = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setInt(1, groupNumber);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
+        return resultSet;
+    }
 }

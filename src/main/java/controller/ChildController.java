@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import model.Child;
 import repository.ChildRepository;
 
+import javax.sql.rowset.serial.SerialArray;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ChildController {
     private ChildRepository childRepository;
-    private List<Child> allChildren;
+    private List<Child> allChildren, allChildrenById;
     private List<String> allChildrenFullNames;
 
     public void addChild(ChildDto childDto) throws SQLException, IOException {
@@ -79,5 +81,14 @@ public class ChildController {
             resultList.add(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
         }
         resultSet.close();
+    }
+
+    public List<Child> getAllChildrenById(List<Integer> childIdByDateList) throws IOException, SQLException {
+        childRepository = new ChildRepository();
+        allChildrenById = new ArrayList<>();
+        for (int child_id: childIdByDateList) {
+            fromResultSetToChildList(childRepository.getAllChildrenById(child_id), allChildrenById);
+        }
+        return allChildrenById;
     }
 }
