@@ -61,4 +61,15 @@ public class ChildStatusRepository extends ConnectionToDB{
         con.close();
         return resultSet;
     }
+
+    public ResultSet getAllChildStatusByChildId(int childId) throws SQLException {
+        String SQL = "SELECT * FROM child_status WHERE child_id = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setInt(1, childId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
+        return resultSet;
+    }
 }

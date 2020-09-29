@@ -1,7 +1,5 @@
 package view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -13,6 +11,7 @@ import view.childStatusPane.AddChildToGroupPane;
 import view.childStatusPane.RemoveChildFromGroupPane;
 import view.childStatusPane.ReplaceChildFromGroupPane;
 import view.extraPane.ChildFromGroupByDatePane;
+import view.extraPane.FullChildInfoByFullNamePane;
 import view.groupPane.AddGroupPane;
 import view.groupPane.RemoveGroupPane;
 import view.sectionPane.AddSectionPane;
@@ -48,6 +47,7 @@ public class AppMenuBar {
     private final MenuItem addChildToGroupMenuItem;
     private final MenuItem removeChildFromGroupMenuItem;
     private final MenuItem childFromGroupByDateMenuItem;
+    private final MenuItem fullChildInfoByFullNameMenuItem;
 
     public AppMenuBar(AppScene appScene) {
         mainMenuBar = new MenuBar();
@@ -76,12 +76,13 @@ public class AppMenuBar {
 
         extraMenu = new Menu("Extra");
         childFromGroupByDateMenuItem = new MenuItem("Child+group by date");
+        fullChildInfoByFullNameMenuItem = new MenuItem("Child+group by name");
 
         teacherMenu.getItems().addAll(addTeacherMenuItem, removeTeacherMenuItem, changeTeacherMenuItem);
         childMenu.getItems().addAll(addChildMenuItem, removeChildMenuItem, changeChildMenuItem, addChildToGroupMenuItem, removeChildFromGroupMenuItem, replaceChildMenuItem);
         sectionMenu.getItems().addAll(addSectionMenuItem, removeSectionMenuItem, changeSectionMenuItem);
         groupMenu.getItems().addAll(addGroupMenuItem, removeGroupMenuItem);
-        extraMenu.getItems().addAll(childFromGroupByDateMenuItem);
+        extraMenu.getItems().addAll(childFromGroupByDateMenuItem, fullChildInfoByFullNameMenuItem);
 
         action(appScene);
 
@@ -241,6 +242,17 @@ public class AppMenuBar {
             }
             assert childFromGroupByDatePane != null;
             appScene.getPane().setCenter(childFromGroupByDatePane.getPane());
+        });
+
+        fullChildInfoByFullNameMenuItem.setOnAction(event -> {
+            FullChildInfoByFullNamePane fullChildInfoByFullNamePane = null;
+            try {
+                fullChildInfoByFullNamePane = new FullChildInfoByFullNamePane();
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            assert fullChildInfoByFullNamePane != null;
+            appScene.getPane().setCenter(fullChildInfoByFullNamePane.getPane());
         });
     }
 }

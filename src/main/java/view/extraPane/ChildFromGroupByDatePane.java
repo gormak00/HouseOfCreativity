@@ -1,6 +1,5 @@
 package view.extraPane;
 
-import controller.ExtraController;
 import controller.GroupsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,10 +38,10 @@ public class ChildFromGroupByDatePane {
         createDateField();
         createAllLabels();
         createAllGroupsBox();
-        createDateButton();
+        createChildButton();
     }
 
-    private void createDateField(){
+    private void createDateField() {
         dateField = new TextField("ДД.ММ.ГГГГ");
         setTextFieldLayoutAndFont(pane, dateField, 10.0, 30.0, mainFont);
 
@@ -79,7 +78,7 @@ public class ChildFromGroupByDatePane {
     private void createAllGroupsBox() throws IOException, SQLException {
         groupsController = new GroupsController();
         ObservableList<Integer> freeGroupsList = FXCollections.observableArrayList();
-        for (Groups currentGroup: groupsController.getAllGroups()) {
+        for (Groups currentGroup : groupsController.getAllGroups()) {
             freeGroupsList.add(currentGroup.getNumber());
         }
         allGroupsBox = new ComboBox<Integer>(freeGroupsList);
@@ -93,13 +92,13 @@ public class ChildFromGroupByDatePane {
         paneName.getChildren().add(comboBoxName);
     }
 
-    private void createDateButton() {
+    private void createChildButton() {
         childButton = new Button("Показать детей");
         setButtonLayoutAndFont(pane, childButton, 10.0, 110.0);
-        actionReplaceButton();
+        actionChildButton();
     }
 
-    private void actionReplaceButton() {
+    private void actionChildButton() {
         childButton.setOnAction(event -> {
             try {
                 date = formatter.parse(dateField.getText());

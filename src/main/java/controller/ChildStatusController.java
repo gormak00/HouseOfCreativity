@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 public class ChildStatusController {
     private ChildStatusRepository childStatusRepository;
@@ -30,19 +31,16 @@ public class ChildStatusController {
         createChildGroupsList(fullNameOfChild);
         createAllGroupsList();
         createNotChildGroupsList(allGroupsList, childGroupsList);
-        System.out.println(allGroupsList.size());
-        System.out.println(childGroupsList.size());
-        System.out.println(notChildGroupsList.size());
         return notChildGroupsList;
 
     }
 
-    private void createNotChildGroupsList(List<Integer> allGroupsList, List<Integer> childGroupsList){
+    private void createNotChildGroupsList(List<Integer> allGroupsList, List<Integer> childGroupsList) {
         boolean equal = false;
         notChildGroupsList = new ArrayList<>();
-        for (int number: allGroupsList) {
-            for (int number2: childGroupsList){
-                if (number == number2){
+        for (int number : allGroupsList) {
+            for (int number2 : childGroupsList) {
+                if (number == number2) {
                     equal = true;
                 }
             }
@@ -110,7 +108,6 @@ public class ChildStatusController {
         childRepository = new ChildRepository();
         int id = fromResultSetToInt(childRepository.getChildIdByFullName(lastName, firstName, patronymic));
         childStatus = ChildStatusMapper.toChildStatus(childStatusDto, id);
-        System.out.println("ТУТ " + id + " " + childStatusDto.getOldGroupNumber() + " " + childStatusDto.getTodayDate());
         childStatusRepository.setEndDateByChildIdAndGroup(id, childStatusDto.getOldGroupNumber(), childStatusDto.getTodayDate());
 
     }
@@ -118,7 +115,6 @@ public class ChildStatusController {
     public List<ChildStatus> getAllChildrenByGroup(int groupNumber) throws IOException, SQLException {
         childStatusRepository = new ChildStatusRepository();
         childStatusList = new ArrayList<>();
-        //childStatusRepository.getAllChildrenByGroupNumber(groupNumber);
         fromResultSetToChildStatusList(childStatusRepository.getAllChildrenByGroupNumber(groupNumber), childStatusList);
         return childStatusList;
     }
@@ -134,5 +130,12 @@ public class ChildStatusController {
         }
         resultSet.close();
 
+    }
+
+    public List<ChildStatus> getChildStatusListByChildId(int childId) throws IOException, SQLException {
+        childStatusRepository = new ChildStatusRepository();
+        childStatusList = new ArrayList<>();
+        fromResultSetToChildStatusList(childStatusRepository.getAllChildStatusByChildId(childId), childStatusList);
+        return childStatusList;
     }
 }

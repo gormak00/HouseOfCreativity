@@ -4,7 +4,6 @@ import model.Child;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.List;
 
 public class ChildRepository extends ConnectionToDB {
     private Connection con;
@@ -56,7 +55,7 @@ public class ChildRepository extends ConnectionToDB {
             id = resultSet.getInt(1);
         }
         resultSet.close();
-        return id != 0 ?id :null;
+        return id != 0 ? id : null;
     }
 
     public void removeChild(int id) throws SQLException {
@@ -135,7 +134,19 @@ public class ChildRepository extends ConnectionToDB {
 
         ResultSet resultSet = preparedStatement.executeQuery();
         preparedStatement.close();
-        //con.close();
+        return resultSet;
+    }
+
+    public ResultSet getChildByFullName(String lastName, String firstName, String patronymic) throws SQLException {
+        String SQL = "SELECT * FROM child WHERE last_name = ? AND first_name = ? AND patronymic = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setString(1, lastName);
+        preparedStatement.setString(2, firstName);
+        preparedStatement.setString(3, patronymic);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
         return resultSet;
     }
 }
