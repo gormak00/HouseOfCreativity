@@ -1,8 +1,10 @@
 package view.extraPane;
 
 import controller.GroupsController;
+import controller.SectionController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -12,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import model.Groups;
+import model.Section;
 import view.table.ChildFromGroupByDateTable;
 
 import java.io.IOException;
@@ -29,7 +32,10 @@ public class ChildFromGroupByDatePane {
     private Button childButton;
     private GroupsController groupsController;
     private ChildFromGroupByDateTable childFromGroupByDateTable;
+    private SectionController sectionController;
     private Date date;
+    private Groups groups;
+    private Section section;
     private static Font mainFont = Font.font("Arial", FontWeight.NORMAL, 13);
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
 
@@ -100,13 +106,17 @@ public class ChildFromGroupByDatePane {
 
     private void actionChildButton() {
         childButton.setOnAction(event -> {
+            groupsController = new GroupsController();
+            sectionController = new SectionController();
             try {
                 date = formatter.parse(dateField.getText());
                 childFromGroupByDateTable = new ChildFromGroupByDateTable(date, Integer.parseInt(allGroupsBox.getValue().toString()));
+                groups = groupsController.getGroupByNumber(Integer.parseInt(allGroupsBox.getValue().toString()));
+                section = sectionController.getSectionByNumber(groups.getSection_number());
+                createSectionGroupDateLabel(section.getName(), groups.getName(), String.valueOf(date));
             } catch (IOException | SQLException | ParseException e) {
                 e.printStackTrace();
             }
-            createSectionGroupDateLabel("ad", "wqer", "22/22/22");
             pane.getChildren().add(childFromGroupByDateTable.getTable());
         });
     }

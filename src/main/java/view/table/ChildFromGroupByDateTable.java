@@ -31,7 +31,7 @@ public class ChildFromGroupByDateTable {
         table.setPrefWidth(800);
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
-        table.setLayoutY(0.0);
+        table.setLayoutY(190.0);
 
         createColumn(firstNameColumn, "Имя", "first_name");
         createColumn(lastNameColumn, "Фамилия", "last_name");

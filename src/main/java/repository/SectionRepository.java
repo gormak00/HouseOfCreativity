@@ -75,4 +75,15 @@ public class SectionRepository extends ConnectionToDB {
         con.close();
         return resultSet;
     }
+
+    public ResultSet getSectionByNumber(int section_number) throws SQLException {
+        String SQL = "SELECT * FROM section WHERE number = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setInt(1, section_number);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
+        return resultSet;
+    }
 }

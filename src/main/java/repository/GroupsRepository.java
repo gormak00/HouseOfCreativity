@@ -41,4 +41,15 @@ public class GroupsRepository extends ConnectionToDB {
         con.close();
         return resultSet;
     }
+
+    public ResultSet getGroupByNumber(int groupNumber) throws SQLException {
+        String SQL = "SELECT * FROM groups WHERE number = ?;";
+        PreparedStatement preparedStatement = con.prepareStatement(SQL);
+        preparedStatement.setInt(1, groupNumber);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.close();
+        con.close();
+        return resultSet;
+    }
 }

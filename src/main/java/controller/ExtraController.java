@@ -44,7 +44,7 @@ public class ExtraController {
             Date chSStartDate = formatter.parse(currentChS.getStart_date());
             Date chSEndDate = null;
             if (currentChS.getEnd_date() != null) chSEndDate = formatter.parse(currentChS.getEnd_date());
-            if (chSStartDate.getTime() < date.getTime() && (chSEndDate == null || chSEndDate.getTime() > date.getTime())) {
+            if (chSStartDate.getTime() <= date.getTime() && (chSEndDate == null || chSEndDate.getTime() > date.getTime())) {
                 childIdByDateList.add(currentChS.getChild_id());
             }
         }

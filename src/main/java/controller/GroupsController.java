@@ -2,6 +2,7 @@ package controller;
 
 import controller.dto.GroupsDto;
 import controller.dto.GroupsMapper;
+import javafx.scene.Group;
 import model.Groups;
 import repository.GroupsRepository;
 
@@ -43,5 +44,12 @@ public class GroupsController {
             resultList.add(currentGroups);
         }
         resultSet.close();
+    }
+
+    public Groups getGroupByNumber(int groupNumber) throws IOException, SQLException {
+        groupsRepository = new GroupsRepository();
+        allGroups = new ArrayList<>();
+        fromResultSetToAllGroupsSet(groupsRepository.getGroupByNumber(groupNumber), allGroups);
+        return allGroups.get(0);
     }
 }

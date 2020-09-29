@@ -15,6 +15,7 @@ public class SectionController {
     private TeacherController teacherController;
     private SectionRepository sectionRepository;
     private List<SectionDto> allSectionsDto;
+    private List<Section> allSections;
     private List<Integer> allSectionsNumbers;
 
     public void addSection(SectionDto sectionDto) throws IOException, SQLException {
@@ -69,6 +70,25 @@ public class SectionController {
     private void fromResultSetToSectionNumbersList(ResultSet resultSet, List<Integer> resultList) throws SQLException {
         while (resultSet.next()) {
             resultList.add(resultSet.getInt(1));
+        }
+        resultSet.close();
+    }
+
+    public Section getSectionByNumber(int section_number) throws IOException, SQLException {
+        allSections = new ArrayList<>();
+        sectionRepository = new SectionRepository();
+        fromResultSetToSectionList(sectionRepository.getSectionByNumber(section_number), allSections);
+        return allSections.get(0);
+    }
+
+    private void fromResultSetToSectionList(ResultSet resultSet, List<Section> resultList) throws SQLException {
+        while (resultSet.next()) {
+            Section currentSection = new Section();
+            currentSection.setNumber(resultSet.getInt(1));
+            currentSection.setName(resultSet.getString(2));
+            currentSection.setTeacher_id(resultSet.getInt(3));
+
+            resultList.add(currentSection);
         }
         resultSet.close();
     }
