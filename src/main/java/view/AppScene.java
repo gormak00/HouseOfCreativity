@@ -11,6 +11,7 @@ public class AppScene {
     private AppMenuBar appMenuBar;
     private Scene scene;
     private BorderPane pane;
+
     public Scene getMainScene() {
         pane = new BorderPane();
         appMenuBar = new AppMenuBar(this);

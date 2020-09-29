@@ -71,12 +71,11 @@ public class TeacherController {
         return teacherRepository.getTeacherIdByFullName(firstName, lastName, patronymic);
     }
 
-    private void splitStringTo3Words(String fullWord){
+    private void splitStringTo3Words(String fullWord) {
         subStr = fullWord.split(delimeter, 3); // Разбить строку str с порогом равным 3, который означает, как много подстрок, должно быть возвращено.
         lastName = subStr[0];
         firstName = subStr[1];
         patronymic = subStr[2];
-        System.out.println(firstName + " " + lastName + " " + patronymic);
     }
 
     public List<String> getFullNamesList() throws IOException, SQLException {

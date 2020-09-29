@@ -98,7 +98,7 @@ public class AddTeacherPane {
         paneName.getChildren().add(buttonName);
     }
 
-    private void insertTeacherIntoBoxesAndFields(Teacher teacher){
+    private void insertTeacherIntoBoxesAndFields(Teacher teacher) {
         sexComboBox.setValue(teacher.getSex());
         familyStatusComboBox.setValue(teacher.getFamily_status());
         educationComboBox.setValue(teacher.getEducation());

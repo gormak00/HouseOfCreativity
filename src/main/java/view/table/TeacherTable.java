@@ -17,6 +17,7 @@ public class TeacherTable {
     private TableView<Teacher> table;
     private TableColumn<Teacher, String> passportNumberColumn, firstNameColumn, lastNameColumn, patronymicColumn, dateOfBirthColumn, sexColumn, familyStatusColumn, educationColumn, addressColumn, phoneNumberColumn, specializationColumn;
     private TeacherController teacherController;
+
     public TeacherTable() throws IOException, SQLException {
         teacherController = new TeacherController();
         ObservableList<Teacher> allTeachers = FXCollections.observableArrayList(teacherController.getAllTeachersList());

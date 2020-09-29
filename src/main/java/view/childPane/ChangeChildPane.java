@@ -23,13 +23,13 @@ public class ChangeChildPane {
         createChangeButton();
     }
 
-    private void createChangeButton(){
+    private void createChangeButton() {
         changeButton = new Button("Изменить выбранного ребенка");
         setButtonLayoutAndFont(changePane, changeButton, 250.0, 550.0);
         action();
     }
 
-    private void setButtonLayoutAndFont(Pane paneName, javafx.scene.control.Button buttonName, double layoutX, double layoutY){
+    private void setButtonLayoutAndFont(Pane paneName, javafx.scene.control.Button buttonName, double layoutX, double layoutY) {
         buttonName.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         buttonName.setLayoutX(layoutX);
         buttonName.setLayoutY(layoutY);

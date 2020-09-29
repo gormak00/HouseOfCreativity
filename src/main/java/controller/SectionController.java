@@ -4,7 +4,6 @@ import controller.dto.SectionDto;
 import controller.dto.SectionMapper;
 import model.Section;
 import repository.SectionRepository;
-import repository.TeacherRepository;
 
 import java.io.IOException;
 import java.sql.ResultSet;

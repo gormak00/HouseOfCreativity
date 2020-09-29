@@ -32,12 +32,9 @@ public class ExtraController {
         childController = new ChildController();
         childStatusList = new ArrayList<>();
         childStatusList = childStatusController.getAllChildrenByGroup(groupNumber);
-        System.out.println(childStatusList.size());
         createChildIdByDateList(date);
         allChildrenByIdList = new ArrayList<>();
         allChildrenByIdList = childController.getAllChildrenById(childIdByDateList);
-        System.out.println(allChildrenByIdList.size());
-        System.out.println(childIdByDateList.size());
         return allChildrenByIdList;
     }
 
@@ -69,7 +66,6 @@ public class ExtraController {
         lastName = subStr[0];
         firstName = subStr[1];
         patronymic = subStr[2];
-        System.out.println(firstName + " " + lastName + " " + patronymic);
     }
 
     private void fromResultSetToChildList(ResultSet resultSet, List<Child> childList) throws SQLException {

@@ -1,0 +1,100 @@
+CREATE TABLE teacher
+(
+    id SERIAL PRIMARY KEY,
+    passport_number VARCHAR(9),
+    first_name VARCHAR(25),
+    last_name VARCHAR(25),
+    patronymic VARCHAR(25),
+    date_of_birth VARCHAR(10),
+    sex VARCHAR(10),
+    family_status VARCHAR(25),
+    education VARCHAR(50),
+    address VARCHAR(50),
+    phone_number VARCHAR(25),
+    specialization VARCHAR(100)
+);
+
+INSERT INTO teacher (passport_number, first_name, last_name, patronymic, date_of_birth, sex, family_status, education, address, phone_number, specialization)
+VALUES
+('MP1234567', 'Егор', 'Макарчук', 'Валерьевич', '22.08.2000', 'Мужской', 'Холост', 'Высшее профессиональное', 'Минск', '+375(29)2524185', 'каратэ'),
+('MP7654321', 'Юля', 'Макарчук', 'Валерьевна', '17.10.1997', 'Женский', 'Холост', 'Высшее профессиональное', 'Минск', '+375(29)5086917', 'художественная школа'),
+('MP1111111', 'Илья', 'Раскольников', 'Артемьевич', '01.01.2001', 'Мужской', 'Холост', 'Общее среднее', 'Брест', '+375(29)1111111', 'жонглирование');
+
+
+CREATE TABLE child
+(
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(25),
+    last_name VARCHAR(25),
+    patronymic VARCHAR(25),
+    age INTEGER,
+    number_of_school VARCHAR(10),
+    school_class VARCHAR(10),
+    number_of_birth_certificate VARCHAR(25),
+    date_of_birth_certificate VARCHAR(10),
+    address VARCHAR(50),
+    phone_number VARCHAR(25),
+    full_name_dad VARCHAR(50),
+    phone_number_dad VARCHAR(25),
+    full_name_mum VARCHAR(50),
+    phone_number_mum VARCHAR(25)
+);
+
+INSERT INTO child (first_name, last_name, patronymic, age, number_of_school, school_class, number_of_birth_certificate, date_of_birth_certificate, address, phone_number, full_name_dad, phone_number_dad, full_name_mum, phone_number_mum)
+VALUES
+('Маша', 'Васюткина', 'Егоровна', '14', '218', '10', '43123', '13.03.2002', 'Пинск', '+375(29)12345678', 'Егор Олегович Васюткин', '+375(33)1232412', 'Дарья Дмитриевна Васюткина', '+375(33)2365489'),
+('Лера', 'Зубрицкая', 'Геннадьевна', '10', '123', '6', '642353241', '22.11.1993', 'Могилев', '+375(44)98765432', 'Геннадий Петрович Зубрицкий', '+375(33)5477456', 'Анна Анатольевна Зубрицкая', '+375(33)0987762'),
+('Антон', 'Антонов', 'Максимович', '9', '61', '5', '413344', '09.09.2009', 'Минск', '+375(29)9000001', 'Максим Максимович Антонов', '+375(33)8765434', 'Полина Дмитриевна Антонова', '+375(33)1232412');
+
+CREATE TABLE section
+(
+    number INTEGER PRIMARY KEY,
+    name VARCHAR(25),
+    teacher_id INTEGER,
+    FOREIGN KEY (teacher_id) REFERENCES teacher(id)
+);
+
+INSERT INTO section (number, name, teacher_id)
+VALUES
+(1, 'Кофукан', 2),
+(2, 'Симпл дро', 3),
+(3, 'Клоун', 4);
+
+CREATE TABLE groups
+(
+    number INTEGER PRIMARY KEY,
+    name VARCHAR(25),
+    section_number INTEGER,
+    FOREIGN KEY (section_number) REFERENCES section(number)
+);
+
+INSERT INTO groups (number, name, section_number)
+VALUES
+(11, 'Кофукан 1', 1),
+(12, 'Кофукан 2', 1),
+(21, 'Симпл дро 1', 2),
+(31, 'Клоун 1', 3),
+(32, 'Клоун 2', 3);
+
+CREATE TABLE child_status
+(
+    id SERIAL PRIMARY KEY,
+    child_id INTEGER,
+    group_number INTEGER,
+    start_date VARCHAR(10),
+    end_date VARCHAR(10),
+    FOREIGN KEY (child_id) REFERENCES child(id),
+    FOREIGN KEY (group_number) REFERENCES groups(number)
+);
+
+INSERT INTO child_status (child_id, group_number, start_date, end_date)
+VALUES
+(1, 11, '01.09.2020', null),
+(2, 11, '01.09.2020', null),
+(3, 12, '01.09.2020', null),
+(1, 21, '01.09.2020', null),
+(2, 21, '01.09.2020', null),
+(3, 21, '01.09.2020', null),
+(1, 31, '01.09.2020', null),
+(2, 32, '01.09.2020', null),
+(3, 32, '01.09.2020', null);

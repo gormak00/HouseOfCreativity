@@ -19,5 +19,7 @@ public interface TeacherMapper {
         teacher.setPhone_number(teacherDto.getPhoneNumber());
         teacher.setSpecialization(teacherDto.getSpecialization());
         return teacher;
-    };
+    }
+
+    ;
 }

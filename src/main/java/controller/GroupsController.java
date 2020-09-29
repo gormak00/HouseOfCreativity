@@ -2,7 +2,6 @@ package controller;
 
 import controller.dto.GroupsDto;
 import controller.dto.GroupsMapper;
-import controller.dto.SectionDto;
 import model.Groups;
 import repository.GroupsRepository;
 
@@ -15,6 +14,7 @@ import java.util.List;
 public class GroupsController {
     private GroupsRepository groupsRepository;
     private List<Groups> allGroups;
+
     public void addGroup(GroupsDto groupsDto) throws IOException, SQLException {
         groupsRepository = new GroupsRepository();
         Groups groups = GroupsMapper.toGroups(groupsDto);

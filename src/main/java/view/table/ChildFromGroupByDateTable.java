@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
+
 @Getter
 public class ChildFromGroupByDateTable {
     private TableView<Child> table;

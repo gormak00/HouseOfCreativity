@@ -49,13 +49,13 @@ public class AddGroupPane {
         paneName.getChildren().add(comboBoxName);
     }
 
-    private void createAddButton(){
+    private void createAddButton() {
         addButton = new Button("Добавить группу");
         setButtonLayoutAndFont(addPane, addButton, 250.0, 110.0);
         actionAddButton();
     }
 
-    private void actionAddButton(){
+    private void actionAddButton() {
         addButton.setOnAction(event -> {
             GroupsController groupsController = new GroupsController();
             try {
@@ -66,7 +66,7 @@ public class AddGroupPane {
         });
     }
 
-    private GroupsDto createGroupsDto(){
+    private GroupsDto createGroupsDto() {
         GroupsDto groupsDto = new GroupsDto();
         groupsDto.setName(nameTextField.getText());
         groupsDto.setNumber(Integer.parseInt(numberTextField.getText()));
@@ -96,7 +96,7 @@ public class AddGroupPane {
         paneName.getChildren().add(textFieldName);
     }
 
-    private void createAllLabels(){
+    private void createAllLabels() {
         numberLabel = new Label("Введите номер группы");
         setLabelLayoutAndFont(addPane, numberLabel, 10.0, 10.0, mainFont);
 

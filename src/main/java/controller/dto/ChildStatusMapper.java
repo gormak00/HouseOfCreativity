@@ -13,6 +13,7 @@ public interface ChildStatusMapper {
         childStatus.setEnd_date(null);
         return childStatus;
     }
+
     static ChildStatus toChildStatus(ChildStatusDto childStatusDto, int childId, String endDate) {
         ChildStatus childStatus = new ChildStatus();
         childStatus.setChild_id(childId);

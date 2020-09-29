@@ -12,7 +12,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lombok.Getter;
 import model.Child;
-import model.Teacher;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -47,7 +46,7 @@ public class AddChildPane {
         changeStage.show();
     }
 
-    private void insertChildIntoFields(Child child){
+    private void insertChildIntoFields(Child child) {
         firstNameField.setText(child.getFirst_name());
         lastNameField.setText(child.getLast_name());
         patronymicField.setText(child.getPatronymic());
@@ -64,15 +63,15 @@ public class AddChildPane {
         phoneNumberMumField.setText(child.getPhone_number_mum());
     }
 
-    private void createAddButton(){
+    private void createAddButton() {
         addButton = new Button("Добавить ребенка");
-        setButtonLayoutAndFont(addPane, addButton, 250,660);
+        setButtonLayoutAndFont(addPane, addButton, 250, 660);
         actionAddButton();
     }
 
-    private void createChangeButton(Child oldChild){
+    private void createChangeButton(Child oldChild) {
         changeButton = new Button("Изменить ребенка");
-        setButtonLayoutAndFont(addPane, changeButton, 250,660);
+        setButtonLayoutAndFont(addPane, changeButton, 250, 660);
         actionChangeButton(oldChild);
     }
 
@@ -105,7 +104,7 @@ public class AddChildPane {
         paneName.getChildren().add(buttonName);
     }
 
-    private ChildDto createChildDto(){
+    private ChildDto createChildDto() {
         ChildDto childDto = new ChildDto();
         childDto.setFirstName(firstNameField.getText());
         childDto.setLastName(lastNameField.getText());

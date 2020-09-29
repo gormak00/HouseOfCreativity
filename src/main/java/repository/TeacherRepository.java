@@ -54,7 +54,7 @@ public class TeacherRepository extends ConnectionToDB {
             id = resultSet.getInt(1);
         }
         resultSet.close();
-        return id != 0 ?id :null;
+        return id != 0 ? id : null;
     }
 
     public void removeTeacherById(int id) throws SQLException {
@@ -112,7 +112,7 @@ public class TeacherRepository extends ConnectionToDB {
             id = resultSet.getInt(1);
         }
         resultSet.close();
-        return id != 0 ?id :null;
+        return id != 0 ? id : null;
     }
 
     public ResultSet getAllFullNamesTeachers() throws SQLException {

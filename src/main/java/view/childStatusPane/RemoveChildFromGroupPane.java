@@ -16,6 +16,7 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 @Getter
 public class RemoveChildFromGroupPane {
     private ChildController childController;
@@ -106,7 +107,7 @@ public class RemoveChildFromGroupPane {
         });
     }
 
-    private ChildStatusDto createChildStatusDto(){
+    private ChildStatusDto createChildStatusDto() {
         ChildStatusDto childStatusDto = new ChildStatusDto();
         childStatusDto.setChildName(childNameBox.getValue().toString());
         childStatusDto.setOldGroupNumber(Integer.parseInt(oldGroupBox.getValue().toString()));

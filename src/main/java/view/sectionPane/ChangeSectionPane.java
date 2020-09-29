@@ -6,7 +6,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
-import model.Section;
 import view.table.SectionTable;
 
 import java.io.IOException;

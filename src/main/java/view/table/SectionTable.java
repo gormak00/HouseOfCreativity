@@ -8,7 +8,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
-import model.Section;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,7 +26,6 @@ public class SectionTable {
         table.setPrefHeight(500);
         table.setLayoutX(0.0);
         table.setLayoutY(0.0);
-        //action();
 
         createColumn(numberColumn, "Номер секции", "number");
         createColumn(nameColumn, "Название секции", "name");

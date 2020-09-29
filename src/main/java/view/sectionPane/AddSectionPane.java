@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import lombok.Getter;
-import model.Child;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -55,19 +54,19 @@ public class AddSectionPane {
         changeStage.show();
     }
 
-    private void insertSectionDtoIntoFields(SectionDto sectionDto){
+    private void insertSectionDtoIntoFields(SectionDto sectionDto) {
         numberTextField.setText(String.valueOf(sectionDto.getNumber()));
         nameTextField.setText(sectionDto.getName());
         fullNameTeacherBox.setValue(sectionDto.getFullNameTeacher());
     }
 
-    private void createAddButton(){
+    private void createAddButton() {
         addButton = new Button("Добавить секцию");
         setButtonLayoutAndFont(addPane, addButton, 260.0, 110.0);
         actionAddButton();
     }
 
-    private void actionAddButton(){
+    private void actionAddButton() {
         addButton.setOnAction(event -> {
             SectionController sectionController = new SectionController();
             try {
@@ -77,13 +76,14 @@ public class AddSectionPane {
             }
         });
     }
-    private void createChangeButton(SectionDto oldSectionDto){
+
+    private void createChangeButton(SectionDto oldSectionDto) {
         changeButton = new Button("Изменить секцию");
         setButtonLayoutAndFont(addPane, changeButton, 260.0, 110.0);
         actionChangeButton(oldSectionDto);
     }
 
-    private void actionChangeButton(SectionDto oldSectionDto){
+    private void actionChangeButton(SectionDto oldSectionDto) {
         changeButton.setOnAction(event -> {
             SectionController sectionController = new SectionController();
             try {
@@ -138,15 +138,15 @@ public class AddSectionPane {
         paneName.getChildren().add(textFieldName);
     }
 
-    private void createAllLabels(){
+    private void createAllLabels() {
         numberLabel = new Label("Введите номер секции");
-            setLabelLayoutAndFont(addPane, numberLabel, 10.0, 10.0, mainFont);
+        setLabelLayoutAndFont(addPane, numberLabel, 10.0, 10.0, mainFont);
 
         nameLabel = new Label("Введите название секции");
-            setLabelLayoutAndFont(addPane, nameLabel, 10.0, 60.0, mainFont);
+        setLabelLayoutAndFont(addPane, nameLabel, 10.0, 60.0, mainFont);
 
         fullNameTeacherLabel = new Label("Введите ФИО преподавателя");
-            setLabelLayoutAndFont(addPane, fullNameTeacherLabel, 10.0, 110.0, mainFont);
+        setLabelLayoutAndFont(addPane, fullNameTeacherLabel, 10.0, 110.0, mainFont);
     }
 
     private void setLabelLayoutAndFont(Pane paneName, Label labelName, Double layoutX, Double layoutY, Font font) {

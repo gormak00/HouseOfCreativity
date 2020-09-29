@@ -93,7 +93,7 @@ public class ReplaceChildFromGroupPane {
         paneName.getChildren().add(textFieldName);
     }
 
-    private void createChildLabel(){
+    private void createChildLabel() {
         childNameLabel = new Label("Выберите имя ребенка");
         setLabelLayoutAndFont(replacePane, childNameLabel, 10.0, 10.0, mainFont);
     }
@@ -133,7 +133,7 @@ public class ReplaceChildFromGroupPane {
         });
     }
 
-    private ChildStatusDto createChildStatusDto(){
+    private ChildStatusDto createChildStatusDto() {
         ChildStatusDto childStatusDto = new ChildStatusDto();
         childStatusDto.setChildName(childNameBox.getValue().toString());
         childStatusDto.setTodayDate(todayDateField.getText());

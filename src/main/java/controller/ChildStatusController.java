@@ -68,7 +68,6 @@ public class ChildStatusController {
         lastName = subStr[0];
         firstName = subStr[1];
         patronymic = subStr[2];
-        System.out.println(firstName + " " + lastName + " " + patronymic);
     }
 
     private void fromResultSetToGroupsList(ResultSet resultSet, List<Integer> resultList) throws SQLException {

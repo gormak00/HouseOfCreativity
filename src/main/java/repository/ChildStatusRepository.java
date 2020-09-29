@@ -3,10 +3,14 @@ package repository;
 import model.ChildStatus;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class ChildStatusRepository extends ConnectionToDB{
+public class ChildStatusRepository extends ConnectionToDB {
     private Connection con;
+
     public ChildStatusRepository() throws IOException, SQLException {
         con = getConnectionFromDB();
     }
